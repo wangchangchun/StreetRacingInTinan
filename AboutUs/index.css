@@ -1,0 +1,19 @@
+body{
+    background-color: #020036;
+}
+
+#pic1{
+    position: absolute;
+    height: 80vh;
+    left:18%; 
+    top:3%;
+    display: none;
+}
+#pic2{
+    position: absolute;
+    height: 80vh;
+    top : 18%;
+    left: 3%;
+    display: none;
+}
+}
