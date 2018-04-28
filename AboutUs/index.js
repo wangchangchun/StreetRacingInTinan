@@ -1,6 +1,12 @@
 $(document).ready(function(){
 
-    $('#pic2').transition('fly down',2000);
-    $('#pic1').transition('fly up',2000);
+    $('#pic2').show().animate({
+      left:"3%",
+      top:"18%"
+    },2000);
+    $('#pic1').show().animate({
+      top:"3%",
+      left: "18%"
+    },2000);
 })
 

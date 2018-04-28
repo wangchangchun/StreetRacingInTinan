@@ -5,15 +5,44 @@ body{
 #pic1{
     position: absolute;
     height: 80vh;
-    left:18%; 
-    top:3%;
+    width:30vw;
+    left:35%; 
+    top:100vh;
     display: none;
 }
 #pic2{
     position: absolute;
     height: 80vh;
-    top : 18%;
-    left: 3%;
+    width:30vw;
+    top :-80vh;
+    left: -20%;
     display: none;
 }
+#SRT_ch{
+    position: absolute;
+    height: 13vh;
+    width: 28vw;
+    top:10%;
+    left: 50%;
+}
+#SRT{
+    position: absolute;
+    height: 25vh;
+    width: 25vw;
+    top:25%;
+    left: 50%;
+}
+#lattice{
+    position: absolute;
+    height: 37vh;
+    width: 28vw;
+    top:50%;
+    left: 50%;
+}
+#about_us{
+    position: absolute;
+    height: 8vh;
+    width: 15vw;
+    top:90%;
+    left: 45%;
 }
