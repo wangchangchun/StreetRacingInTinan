@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+
     $('#pic2').show().animate({
       left:"3%",
       top:"18%"
@@ -34,9 +35,17 @@ $(document).ready(function(){
 			top: "116%",
 			left: "7%"
 		},500)
+		$("#intro").show(1500).animate({
+			top: "120%",
+			left: "7%"
+		},300)
+		$("#icon").show(1800).animate({
+			top: "170%",
+			right: "18%"
+		},300)
 	})
 	$(window).on("scroll", function(){
-		if($(window).scrollTop()+$(window).height()>=1400){
+		if($(window).scrollTop()+$(window).height()>=1400&&$(window).scrollTop()+$(window).height()<=1500){
 			$("#about_us_intro").show().animate({
 				top: "110%",
 				left: "7%"
@@ -51,9 +60,24 @@ $(document).ready(function(){
 			},300)
 			$("#icon").show(1800).animate({
 				top: "170%",
-				right: "18%"
+				left: "82%",
+				height:"12vh",
+				width:"6vw"
 			},300)
 		};
+	})
+	//click MEMBER
+	$("#icon").click(function(){
+		$("html,body").scrollTop(1466);
+		$(this).animate({
+			top:"233%",
+			left:"3%",
+			height:"24vh",
+			width:"12vw"
+		},300)
+	})
+	$("#back_to_top").click(function(){
+		$("html,body").scrollTop(0);
 	})
 })
 

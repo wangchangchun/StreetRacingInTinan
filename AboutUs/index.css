@@ -1,5 +1,6 @@
 body{
     background-color: #020036;
+	height:300%;
 }
 
 #pic1{
@@ -89,4 +90,76 @@ body{
 	top: 200%;
 	right: 18%;
 	display: none;
+}
+#member_photo{
+	position:absolute;
+	height:100vh;
+	width:75vw;
+	top:200%;
+	left:25%;
+	background-color:#ffb84d;
+}
+#back_to_top{
+	position:absolute;
+	height:6vh;
+	width:6vw;
+	top:290%;
+	left:2%;
+}
+#team_photo{
+	position:absolute;
+	height:48vh;
+	width:36vw;
+	top:20%;
+	left:28%;
+}
+/*change the tag name if you want*/
+#mem_1{
+	position:absolute;
+	height:12vh;
+	width:6vw;
+	top:75%;
+	left:20%;
+}
+#mem_2{
+	position:absolute;
+	height:12vh;
+	width:6vw;
+	top:75%;
+	left:30%;
+}
+#mem_3{
+	position:absolute;
+	height:12vh;
+	width:6vw;
+	top:75%;
+	left:40%;
+}
+#mem_4{
+	position:absolute;
+	height:12vh;
+	width:6vw;
+	top:75%;
+	left:50%;
+}
+#mem_5{
+	position:absolute;
+	height:12vh;
+	width:6vw;
+	top:75%;
+	left:60%;
+}
+#mem_6{
+	position:absolute;
+	height:12vh;
+	width:6vw;
+	top:75%;
+	left:70%;
+}
+#mem_7{
+	position:absolute;
+	height:12vh;
+	width:6vw;
+	top:75%;
+	left:80%;
 }
