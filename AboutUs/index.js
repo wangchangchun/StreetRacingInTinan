@@ -60,7 +60,7 @@ $(document).ready(function(){
 			},300)
 			$("#icon").show(1800).animate({
 				top: "170%",
-				left: "82%",
+				left: "76%",
 				height:"12vh",
 				width:"6vw"
 			},300)
