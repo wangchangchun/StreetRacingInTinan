@@ -2,65 +2,61 @@ body{
     background-color: #020036;
 	height:300%;
 }
-
+#intro{
+  position:absolute;
+  top:100vh;
+}
 #pic1{
     position: absolute;
-    height: 80vh;
-    width:30vw;
+    max-width:30vw;
     left:35%; 
     top:100vh;
     display: none;
 }
 #pic2{
     position: absolute;
-    height: 80vh;
-    width:30vw;
+    max-width:30vw;
     top :-80vh;
     left: -20%;
     display: none;
 }
 #SRT_ch{
     position: absolute;
-    height: 13vh;
-    width: 28vw;
+    max-width: 28vw;
     top:10%;
     left: 100%;
     display: none;
 }
 #SRT{
     position: absolute;
-    height: 25vh;
-    width: 25vw;
+    max-width: 25vw;
     top:25%;
     left: 100%;
     display: none;
 }
 #lattice{
     position: absolute;
-    height: 37vh;
-    width: 28vw;
+    max-width: 28vw;
     top:50%;
     left: 100%;
     display: none;
 }
 #about_us{
     position: absolute;
-    height: 8vh;
-    width: 15vw;
+    max-width: 15vw;
     top:120%;
     left: 45%;
     display: none;
 }
 #indexH0{
 	position: absolute;
-	height: 100vh;
-	width: 100vw;
+	height:100vh;
+  width: 100vw;
 	top: 100%;
 	
 }
 #about_us_intro{
 	position: absolute;
-	height: 5vh;
 	width: 20vw;
 	top: 110%;
 	left: -30%;
@@ -79,14 +75,13 @@ body{
 	height: 50vh;
 	width: 80vw;
 	top: 120%;
-	left: -30%;
+	left: -100%;
 	display: none;
 	/*maybe it needs to modify*/
 }
 #icon{
 	position: absolute;
-	height: 12vh;
-	width:  6vw;
+	max-width:  6vw;
 	top: 200%;
 	right: 18%;
 	display: none;
@@ -95,72 +90,47 @@ body{
 	position:absolute;
 	height:100vh;
 	width:75vw;
-	top:200%;
+	top:200vh;
 	left:25%;
-	background-color:#ffb84d;
+	background-color:#FBB03B;
 }
 #back_to_top{
 	position:absolute;
-	height:6vh;
-	width:6vw;
+	max-width:6vw;
 	top:290%;
 	left:2%;
 }
 #team_photo{
 	position:absolute;
-	height:48vh;
-	width:36vw;
-	top:20%;
+	max-width:36vw;
+	top:15%;
 	left:28%;
 }
 /*change the tag name if you want*/
-#mem_1{
+.member  img{
 	position:absolute;
-	height:12vh;
-	width:6vw;
+	max-width:6vw;
 	top:75%;
+}
+#mem_1{
 	left:20%;
 }
 #mem_2{
-	position:absolute;
-	height:12vh;
-	width:6vw;
-	top:75%;
 	left:30%;
 }
 #mem_3{
-	position:absolute;
-	height:12vh;
-	width:6vw;
-	top:75%;
 	left:40%;
 }
 #mem_4{
-	position:absolute;
-	height:12vh;
-	width:6vw;
-	top:75%;
 	left:50%;
 }
 #mem_5{
-	position:absolute;
-	height:12vh;
-	width:6vw;
-	top:75%;
 	left:60%;
 }
 #mem_6{
-	position:absolute;
-	height:12vh;
-	width:6vw;
-	top:75%;
 	left:70%;
 }
 #mem_7{
-	position:absolute;
-	height:12vh;
-	width:6vw;
-	top:75%;
 	left:80%;
 }
 p{
