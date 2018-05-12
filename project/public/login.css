@@ -124,3 +124,9 @@
 	height:13%;
 	display:none;
 }
+#ajax_content
+{
+  position:absolute;
+  top:80%;
+  left:3%;
+}
