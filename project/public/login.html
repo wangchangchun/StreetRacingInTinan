@@ -1,20 +1,26 @@
 <html>
 <head>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="../main.js"></script>
+    <script src="main.js"></script>
+	<link rel = "stylesheet" type = "text/css" href = "login.css">
 </head>
 <body>
-<form action="/get_data" method="get">
-    first name: <input name="fname" type="text"><br>
-    last name: <input name="lname" type="text"><br>
-    <button type="submit">submit via get</button>
-</form>
-
-<form id='ajax_form'>
-    first name: <input name="fname" type="text"><br>
-    last name: <input name="lname" type="text"><br>
-    <button type="submit">submit via ajax</button>
-    <h1 id="ajax_content"></h1>
-</form>
+<img id="road" src="https://github.com/wangchangchun/StreetRacingInTinan/blob/master/project/public/ROAD.png?raw=true">
+<div id="block">
+	<h1 id="ID_word">STUDENT&nbsp;ID&nbsp;:</h1>
+	<input name="ID" type="text" id="ID_text">
+	<h1 id="PASSWORD_word">PASSWORD&nbsp;:</h1>
+	<input name="PASSWORD" type="text" id="PASSWORD_text">
+	<h1 id="NAME_word">NAME&nbsp;:</h1>
+	<input name="NAME" type="text" id="NAME_text">
+	<h1 id="ajax_content"></h1>
+	<button id="login_button" type="submit"></button>
+	<button id="sign_up_button" type="submit"></button>
+	<button id="finish_button" type="submit"></button>
+</div>
+<img id="logo" src="https://github.com/wangchangchun/StreetRacingInTinan/blob/master/project/public/TSR.png?raw=true">
 </body>
 </html>

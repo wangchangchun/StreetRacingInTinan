@@ -1,16 +1,43 @@
 $(document).ready(function() {  
-    $("#ajax_btn").click(function(){
+    $("#login_button").click(function(){
         event.preventDefault();//取消reload
         $.ajax({
-            method: "get",
-            url: "./ajax_data",
+            method: "POST",
+            url: "./login_data",
             data: {
-                fname: $("#ajax_form input[name='fname']").val(),
-                lname: $("#ajax_form input[name='lname']").val(),
+                ID: $("input[name='ID']").val(),
+                PASSWORD: $("input[name='PASSWORD']").val(),
             },
             success: function(data) {
                 $("#ajax_content").text(data)
             }
           })
-    })  
+    })
+	$("#sign_up_button").click(function(){
+		$("#login_button").hide();
+		$("#sign_up_button").hide();
+		$("#NAME_word").show();
+		$("#NAME_text").show();
+		$("#finish_button").show();
+	})
+	$("#finish_button").click(function(){
+        event.preventDefault();//取消reload
+        $.ajax({
+            method: "POST",
+            url: "./sign_up_data",
+            data: {
+                ID: $("input[name='ID']").val(),
+                PASSWORD: $("input[name='PASSWORD']").val(),
+				NAME: $("input[name='NAME']").val(),
+            },
+            success: function(data) {
+                $("#ajax_content").text(data)
+            }
+          })
+		$("#login_button").show();
+		$("#sign_up_button").show();
+		$("#NAME_word").hide();
+		$("#NAME_text").hide();
+		$("#finish_button").hide();
+    })
 })

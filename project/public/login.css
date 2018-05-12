@@ -1,0 +1,126 @@
+#road
+{
+	position:absolute;
+	left:30%;
+	height:100vh;
+	width:50vw;
+}
+#block
+{
+	position:absolute;
+	left:20%;
+	top:35%;
+	height:33vh;
+	width:33vw;
+	background-image:url("https://github.com/wangchangchun/StreetRacingInTinan/blob/master/project/public/block.png?raw=true");
+}
+#logo
+{
+	position:absolute;
+	left:20%;
+	top:69%;
+	height:20vh;
+	width:18vw;
+}
+#login_button
+{
+	border:0;
+	position:absolute;
+	left:50%;
+	top:80%;
+	height:6vh;
+	width:7vw;
+	background-image:url("https://github.com/wangchangchun/StreetRacingInTinan/blob/master/project/public/LOGIN%20BANNER.png?raw=true");
+	background-size:contain;
+	background-repeat:no-repeat;
+	cursor:pointer;
+}
+#sign_up_button
+{
+	border:0;
+	position:absolute;
+	left:73%;
+	top:80%;
+	height:6vh;
+	width:7vw;
+	background-image:url("https://github.com/wangchangchun/StreetRacingInTinan/blob/master/project/public/SIGNUP%20BANNER.png?raw=true");
+	background-size:contain;
+	background-repeat:no-repeat;
+	cursor:pointer;
+}
+#finish_button
+{
+	border:0;
+	position:absolute;
+	left:73%;
+	top:83%;
+	height:5vh;
+	width:7vw;
+	background-image:url("https://github.com/wangchangchun/StreetRacingInTinan/blob/master/project/public/FINISH%20BANNER.png?raw=true");
+	background-size:contain;
+	background-repeat:no-repeat;
+	cursor:pointer;
+	display:none;
+}
+#ID_word
+{
+	font-size:30px;
+	font-family:sans-serif;
+	position:absolute;
+	top:5%;
+	left:3%;
+}
+#PASSWORD_word
+{
+	font-size:30px;
+	font-family:sans-serif;
+	position:absolute;
+	top:22%;
+	left:3%;
+}
+#NAME_word
+{
+	font-size:30px;
+	font-family:sans-serif;
+	position:absolute;
+	top:47%;
+	left:3%;
+	display:none;
+}
+#ID_text
+{
+	border:2px #cccccc solid;
+	border-radius:10px;
+	font-size:20px;
+	padding:10px;
+	position:absolute;
+	left:3%;
+	top:17%;
+	width:80%;
+	height:13%;
+}
+#PASSWORD_text
+{
+	border:2px #cccccc solid;
+	border-radius:10px;
+	font-size:20px;
+	padding:10px;
+	position:absolute;
+	left:3%;
+	top:42%;
+	width:80%;
+	height:13%;
+}
+#NAME_text
+{
+	border:2px #cccccc solid;
+	border-radius:10px;
+	font-size:20px;
+	padding:10px;
+	position:absolute;
+	left:3%;
+	top:67%;
+	width:80%;
+	height:13%;
+	display:none;
+}
