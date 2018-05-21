@@ -1,0 +1,10 @@
+#bgPic{
+  position:absolute;
+  max-width: 95vw;
+}
+#btns{
+  position:relative;
+  max-width: 20vw;
+  margin-top:20%;
+  left:10%;
+}

@@ -1,0 +1,11 @@
+config = {
+  'mysql': {
+    'host':'localhost',
+    'user': 'uidd2018_groupI',
+    'password': 'TSRgogogo',
+    'dbname': 'uidd2018_groupI'
+  },
+}
+
+module.exports = config;
+

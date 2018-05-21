@@ -62,6 +62,27 @@
 	cursor:pointer;
 	display:none;
 }
+#id_word{
+	position:absolute;
+	left:3%;
+	top:5%;
+	max-width:15vw;
+
+}
+#pw_word{
+	position:absolute;
+	left:3%;
+	top:32%;
+	max-width:15vw;
+
+}
+#name_word{
+	position:absolute;
+	left:3%;
+	top:47%;
+	max-width:15vw;
+
+}
 #ID_word
 {
 	font-size:30px;
