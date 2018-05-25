@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 10088; // 請改成各組分配的port
+const port = 10085; // 請改成各組分配的port
 const bodyParser = require('body-parser');
 const urlencodedParser = bodyParser.urlencoded({extended:true});
 const fs = require('fs');
@@ -15,7 +15,7 @@ const config = {
 };
 
 app.listen(port);
-app.use(express.static(__dirname));
+app.use(express.static(__dirname+'/public'));
 var connection;
 function handleDisconnect() {
   connection = mysql.createConnection(config);
@@ -38,44 +38,58 @@ function handleDisconnect() {
   });
 }
 handleDisconnect();
+
+
+
 app.post("/sign_up_data",urlencodedParser,function(req,res){
-  if(req.body.ID==""||req.body.PASSWORD==""||req.body.NAME==""){
-    res.send('please fill all blanks');
-  }
-  else{
-    fs.readFile('name.json',{},function(err,data){
-      var user;
-      //var id,password,name;
-      if(err){throw err;}
-      user=JSON.parse(data);
-      if(req.body.ID==user[req.body.NAME])
-        res.send('user already exist!');
-      if(!user.hasOwnProperty(req.body.ID)){
-        user[req.body.ID]=req.body.NAME;
-        //user[req.body.NAME]=req.body.PASSWORD;
-        fs.writeFile("name.json",JSON.stringify(user),function(err){if(err)throw err;});
-        res.send('user saved');
-      }
-    });
+	var id = req.param('ID');
+	var pw = req.param('PASSWORD');
+	var name = req.param('NAME');
+	var notfound = 0;
+	if(req.body.ID==""||req.body.PASSWORD==""||req.body.NAME==""){
+		res.send('Please fill all blanks');
+	}
+	else{	
+	  var sqls = "SELECT * FROM `mytable` WHERE id = '"+id+"'";
+	  console.log(sqls);
+	  connection.query(sqls, function(err,result,fields){
+		if(err) throw err;
+		for( var i = 0 ; i < result.length ; i++){
+			if(result[i].id==id) {res.send('Your id has been used.');notfound=1;break;}
+		}
+		if(notfound == 0){
+			var sqli = "INSERT INTO `mytable` ( name , id , pw) VALUES ('"+name+"','"+id+"','"+pw+"')";
+			console.log(sqli);
+			connection.query(sqli, function(err,result){
+				if(err) throw err;
+				console.log("signup");
+				res.send('Sign up succeed');
+			});
+		}
+	  });  
   }
 });
 app.post("/login_data",urlencodedParser,function(req, res) {
+  var id = req.param('ID');
+  var pw = req.param('PASSWORD');
+  var notfound=0;
   if(req.body.ID==""||req.body.PASSWORD==""){
     res.send('please fill all blanks');
   }
   else{
-    fs.readFile('name.json',{},function(err,data) {
-      if(err)throw err;
-      user=JSON.parse(data);
-      if(!user.hasOwnProperty(req.body.ID)){
-        res.send('user not exist!');
-      }
-      /*else if(!user.hasOwnProperty(req.body.PASSWORD)){
-        res.send('Password is wrong');
-        }*/
-      else{
-        res.send('Hello,'+user[req.body.ID]);
-      }
-    });
-  }
+	  var sqls = "SELECT * FROM `mytable` WHERE id = '"+id+"'";
+	  console.log(sqls);
+      connection.query(sqls, function(err,result,fields){
+		if(err) throw err;
+		for( var i = 0 ; i < result.length ; i++){
+			if(result[i].id==id) {
+				notfound=1;
+				if(result[i].pw==pw) res.send('Login succeed');
+				else res.send('Login failed');
+				break;
+			}
+		}
+		if(notfound == 0)res.send('Login failed');			
+	  }); 
+  }	  
 });
