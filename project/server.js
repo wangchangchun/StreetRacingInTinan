@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 10085; // 請改成各組分配的port
+const port = 10088; // 請改成各組分配的port
 const bodyParser = require('body-parser');
 const urlencodedParser = bodyParser.urlencoded({extended:true});
 const fs = require('fs');
@@ -15,7 +15,7 @@ const config = {
 };
 
 app.listen(port);
-app.use(express.static(__dirname+'/public'));
+app.use(express.static(__dirname));
 var connection;
 function handleDisconnect() {
   connection = mysql.createConnection(config);
@@ -41,7 +41,7 @@ handleDisconnect();
 
 
 
-app.post("/sign_up_data",urlencodedParser,function(req,res){
+app.post("/public/sign_up_data",urlencodedParser,function(req,res){
 	var id = req.param('ID');
 	var pw = req.param('PASSWORD');
 	var name = req.param('NAME');
@@ -69,7 +69,7 @@ app.post("/sign_up_data",urlencodedParser,function(req,res){
 	  });  
   }
 });
-app.post("/login_data",urlencodedParser,function(req, res) {
+app.post("/public/login_data",urlencodedParser,function(req, res) {
   var id = req.param('ID');
   var pw = req.param('PASSWORD');
   var notfound=0;

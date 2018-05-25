@@ -10,18 +10,17 @@ $(document).ready(function() {
       },
       success: function(data) {
         $("#ajax_content").text(data)
+          document.location.href="../gameStart/index.html"
       }
     })
   })
   $("#sign_up_button").click(function(){
-    $("#backgroundL").hide();
-	$("#backgroundS").show();
-	$("#login_button").hide();
+    $("#bg_setting").html("<img class='img-fuild' id='backgroundL' src='SIGNUP.png'>");
+    $("#login_button").hide();
     $("#sign_up_button").hide();
     $("#NAME_text").show();
     $("#finish_button").show();
-	$("#ID_text").css("top","39%");
-	$("#PASSWORD_text").css("top","47%");	
+    $("#ID_text").css("margin-top","5%");
   })
   $("#finish_button").click(function(){
     event.preventDefault();//取消reload
@@ -31,20 +30,17 @@ $(document).ready(function() {
       data: {
         ID: $("input[name='ID']").val(),
         PASSWORD: $("input[name='PASSWORD']").val(),
-        NAME: $("input[name='NAME']").val(),
+        NAME: $("input[name='NAME']").val()
       },
       success: function(data) {
         $("#ajax_content").text(data)
+          $("#bg_setting").html("<img class='img-fuild' id='backgroundL' src='LOGIN.png'>");
+        $("#login_button").show();
+        $("#sign_up_button").show();
+        $("#NAME_word").hide();
+        $("#NAME_text").hide();
+        $("#finish_button").hide();
       }
     })
-	$("#backgroundL").show();
-	$("#backgroundS").hide();
-    $("#login_button").show();
-    $("#sign_up_button").show();
-    $("#NAME_word").hide();
-    $("#NAME_text").hide();
-    $("#finish_button").hide();
-	$("#ID_text").css("top","31%");
-	$("#PASSWORD_text").css("top","40%");	
   })
 })

@@ -2,9 +2,24 @@
   position:absolute;
   max-width: 95vw;
 }
-#btns{
+#menuBtn{
   position:relative;
   max-width: 20vw;
-  margin-top:20%;
+  padding-top:20%;
   left:10%;
+}
+#start{
+  position:relative;
+  max-width: 20vw;
+  padding-top:5%;
+}
+#ach{
+  position:relative;
+  max-width: 20vw;
+  padding-top:5%;
+}
+#exit{
+  position:relative;
+  max-width: 20vw;
+  padding-top:5%;
 }
