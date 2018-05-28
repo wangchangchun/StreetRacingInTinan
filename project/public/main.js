@@ -10,7 +10,8 @@ $(document).ready(function() {
       },
       success: function(data) {
         $("#ajax_content").text(data)
-          document.location.href="../gameStart/index.html"
+
+          document.location.href="../gameStart/index.html?"+$("#ID_text").val();
       }
     })
   })

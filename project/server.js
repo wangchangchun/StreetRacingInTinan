@@ -93,3 +93,35 @@ app.post("/public/login_data",urlencodedParser,function(req, res) {
 	  }); 
   }	  
 });
+app.post("/gameStart/readRecord",urlencodedParser,function(req,res){
+    var id = req.param('ID');
+    //console.log(id);
+    var str = "";
+    connection.query("SELECT * FROM `uidd2018_groupI`.`record` WHERE id = \""+id+"\";",(err,rows,fields)=>{ 
+    for(var i=0;i<rows.length;i++)
+    {
+        str = str + rows[i].time+ "<br>"
+          console.log("i = "+i+" "+rows[i].time)
+    }
+    
+    res.send(str);
+    })
+
+})
+app.post("/javascript-racer/saveRecord",urlencodedParser,function(req,res){
+    var id = req.param('ID');
+    var time = req.param('THISTIME');
+    connection.query("SELECT * FROM `uidd2018_groupI`.`mytable` WHERE id = \""+id+"\";",(err,rows,fields)=>{ 
+      if(err) console.log("read err");
+      else{
+      var play = rows[0]['play']+1;
+      var account = rows[0]['name'];
+      var update_str = "UPDATE `uidd2018_groupI`.`mytable` SET `play`="+ play+" WHERE id =\""+id+"\";";
+      connection.query(update_str);
+      var insert_data = "INSERT INTO `uidd2018_groupI`. `record` (id,name,num,time) VALUES(\""+id+"\",\""+account+"\","+play+","+time+");";
+      connection.query(insert_data);
+      }
+
+
+    })
+})

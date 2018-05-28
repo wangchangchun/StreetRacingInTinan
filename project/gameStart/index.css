@@ -23,3 +23,25 @@
   max-width: 20vw;
   padding-top:5%;
 }
+#testData{
+
+  z-index:10;
+  position:absolute;
+  margin-top:-20%;
+  left:60%;
+  font-size:x-large;
+  font-weight:800;
+  color:black;
+}
+#record{
+
+  z-index:10;
+  position:absolute;
+  max-width:60vw;
+  height:50vh;
+  margin-top:0%;
+  left:30%;
+  font-size:large;
+  font-weight:600;
+  color:black;
+}
