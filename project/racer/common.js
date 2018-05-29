@@ -126,12 +126,12 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
           update(step);
         }
         render();
-        //stats.update();
+        stats.update();
         last = now;
         requestAnimationFrame(frame, canvas);
       }
       frame(); // lets get this party started
-      //Game.playMusic();
+      Game.playMusic();
     });
   },
 
@@ -151,6 +151,7 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
       result[n] = document.createElement('img');
       Dom.on(result[n], 'load', onload);
       result[n].src = "images/" + name + ".png";
+      //result[n].src = "res/" + name + ".png";
     }
   },
 
@@ -202,7 +203,7 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
   },
 
   //---------------------------------------------------------------------------
-/*
+
   playMusic: function() {
     var music = Dom.get('music');
     music.loop = true;
@@ -215,7 +216,7 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
       Dom.toggleClassName('mute', 'on', music.muted);
     });
   }
-*/
+
 }
 
 //=========================================================================
@@ -244,10 +245,13 @@ var Render = {
         l1 = Render.laneMarkerWidth(w1, lanes),
         l2 = Render.laneMarkerWidth(w2, lanes),
         lanew1, lanew2, lanex1, lanex2, lane;
-    
+   
+
+    // Set the color of background
     ctx.fillStyle = color.grass;
     ctx.fillRect(0, y2, width, y1 - y2);
     
+
     Render.polygon(ctx, x1-w1-r1, y1, x1-w1, y1, x2-w2, y2, x2-w2-r2, y2, color.rumble);
     Render.polygon(ctx, x1+w1+r1, y1, x1+w1, y1, x2+w2, y2, x2+w2+r2, y2, color.rumble);
     Render.polygon(ctx, x1-w1,    y1, x1+w1, y1, x2+w2, y2, x2-w2,    y2, color.road);
@@ -353,15 +357,19 @@ var KEY = {
   W:     87
 };
 
+
+// Set COLORS
 var COLORS = {
   SKY:  '#72D7EE',
   TREE: '#005108',
   FOG:  '#005108',
-  LIGHT:  { road: '#6B6B6B', grass: '#10AA10', rumble: '#555555', lane: '#CCCCCC'  },
-  DARK:   { road: '#696969', grass: '#009A00', rumble: '#BBBBBB'                   },
-  START:  { road: 'white',   grass: 'white',   rumble: 'white'                     },
-  FINISH: { road: 'black',   grass: 'black',   rumble: 'black'                     }
+  INTERSECTION: {road: '#696969', grass: '#696969', rumble: '#696969'},
+  LIGHT:  { road: '#696969', grass: '#663300', rumble: '#696969', lane: '#CCCCCC'},
+  DARK:   { road: '#696969', grass: '#663300', rumble: '#696969'},
+  START:  { road: 'white',   grass: 'white', rumble: 'white'},
+  FINISH: { road: 'black',   grass: 'black', rumble: 'black'}
 };
+
 
 var BACKGROUND = {
   HILLS: { x:   5, y:   5, w: 1280, h: 480 },
@@ -403,7 +411,8 @@ var SPRITES = {
   PLAYER_UPHILL_RIGHT:    { x: 1385, y: 1018, w:   80, h:   45 },
   PLAYER_LEFT:            { x:  995, y:  480, w:   80, h:   41 },
   PLAYER_STRAIGHT:        { x: 1085, y:  480, w:   80, h:   41 },
-  PLAYER_RIGHT:           { x:  995, y:  531, w:   80, h:   41 }
+  PLAYER_RIGHT:           { x:  995, y:  531, w:   80, h:   41 },
+  TEST:{x:1383,y:825,w:80,h:126}
 };
 
 SPRITES.SCALE = 0.3 * (1/SPRITES.PLAYER_STRAIGHT.w) // the reference sprite width should be 1/3rd the (half-)roadWidth
