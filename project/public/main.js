@@ -91,7 +91,7 @@ function testAPI() {
     console.log('Successful login for: ' + response.name);
     console.log(JSON.stringify(response));
     fb_id = response.id;
-    $.get({
+    $.ajax({
       url: "./fb_read",
       method:"POST",
       type:"post",
@@ -99,8 +99,9 @@ function testAPI() {
         fb_id: response.id,
         fb_name:response.name
       },
-      success:(res)=>{
-              $("#ajax_content").text("Login succeed")
+      success:function(data){
+              $("#ajax_content").text(data)
+              document.location.href="../gameStart/index.html?"+fb_id;
         
       }
     })

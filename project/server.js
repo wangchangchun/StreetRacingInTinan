@@ -64,7 +64,7 @@ app.post("/public/sign_up_data",urlencodedParser,function(req,res){
 			if(result[i].id==id) {res.send('Your id has been used.');notfound=1;break;}
 		}
 		if(notfound == 0){
-			var sqli = "INSERT INTO `mytable` ( name , id , pw) VALUES ('"+name+"','"+id+"','"+pw+"')";
+			var sqli = "INSERT INTO `mytable` ( name , id , pw,play) VALUES ('"+name+"','"+id+"','"+pw+"',0)";
 			console.log(sqli);
 			connection.query(sqli, function(err,result){
 				if(err) throw err;
@@ -102,11 +102,14 @@ app.post("/public/login_data",urlencodedParser,function(req, res) {
 app.post("/public/fb_read",urlencodedParser,function(req, res) {
   var fb_id = req.param("fb_id")
     var fb_name = req.param("fb_name")
+    console.log(fb_id + " "+fb_name)
     connection.query("SELECT * FROM `uidd2018_groupI`.`mytable` WHERE id = \""+fb_id+"\";",(err,rows,fields)=>{ 
       var sql = ""  
-      if(rows.length==0)
-			     sql = "INSERT INTO `mytable` ( name , id ) VALUES ('"+fb_name+"','"+fb_id+"')";
-          
+      if(rows.length==0){
+			     sql = "INSERT INTO `mytable` ( name , id ,play) VALUES ('"+fb_name+"','"+fb_id+"',0)";
+            connection.query(sql)
+      }
+      res.send("login succeed!")
 
     }) 
 })
@@ -133,13 +136,13 @@ app.post("/racer/saveRecord",urlencodedParser,function(req,res){
       else{
       var play = rows[0]['play']+1;
       var account = rows[0]['name'];
+      console.log(account)
       var update_str = "UPDATE `uidd2018_groupI`.`mytable` SET `play`="+ play+" WHERE id =\""+id+"\";";
       connection.query(update_str);
       var insert_data = "INSERT INTO `uidd2018_groupI`. `record` (id,name,num,time) VALUES(\""+id+"\",\""+account+"\","+play+","+time+");";
       connection.query(insert_data);
       }
-
-
+      res.send("OK")
     })
 })
 var httpServer = http.createServer(app);
