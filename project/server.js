@@ -125,7 +125,7 @@ app.post("/gameStart/readRecord",urlencodedParser,function(req,res){
     })
 
 })
-app.post("/javascript-racer/saveRecord",urlencodedParser,function(req,res){
+app.post("/racer/saveRecord",urlencodedParser,function(req,res){
     var id = req.param('ID');
     var time = req.param('THISTIME');
     connection.query("SELECT * FROM `uidd2018_groupI`.`mytable` WHERE id = \""+id+"\";",(err,rows,fields)=>{ 

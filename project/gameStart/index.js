@@ -23,7 +23,7 @@ $(document).ready(function(){
       //document.location.href = "../scorePage/index.html?"+ID;
   })
   $("#start").click(function(){
-    document.location.href = "../javascript-racer/v4.final.html?"+ID;
+    document.location.href = "../racer/v4.final.html?"+ID;
   })
 
 });
