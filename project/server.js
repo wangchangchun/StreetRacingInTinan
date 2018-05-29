@@ -1,10 +1,10 @@
 const fs = require('fs');
 var http = require('http');
 var https = require('https');
-var privateKey  = fs.readFileSync('private.key', 'utf8');
-var certificate = fs.readFileSync('certificate.crt', 'utf8');
-var ca_bundle = fs.readFileSync('ca_bundle.crt', 'utf8');
-var credentials = {key: privateKey, cert: certificate ,ca: ca_bundle};
+var privateKey  = fs.readFileSync('./ssl/private.key','utf8');
+var certificate = fs.readFileSync('./ssl/certificate.crt','utf8');
+var ca_bundle = fs.readFileSync('./ssl/ca_bundle.crt','utf8');
+var credentials = {key: privateKey, cert: certificate};
 const express = require('express');
 const app = express();
 const port = 10088; // 請改成各組分配的port
@@ -120,7 +120,15 @@ app.post("/gameStart/readRecord",urlencodedParser,function(req,res){
     connection.query("SELECT * FROM `uidd2018_groupI`.`record` WHERE id = \""+id+"\";",(err,rows,fields)=>{ 
     for(var i=0;i<rows.length;i++)
     {
-        str = str + rows[i].time+ "<br>"
+      if(rows[i].time>60)
+      {
+          var min = Math.floor(rows[i].time/60);
+          var sec = (rows[i].time%60).toFixed(3);
+          rows[i].time = min+" min "+sec +"sec";
+      }
+      else
+        rows[i].time = rows[i].time+" sec"
+        str = str+rows[i].name+" "+ rows[i].time+ "<br>"
           console.log("i = "+i+" "+rows[i].time)
     }
     
@@ -131,6 +139,7 @@ app.post("/gameStart/readRecord",urlencodedParser,function(req,res){
 app.post("/racer/saveRecord",urlencodedParser,function(req,res){
     var id = req.param('ID');
     var time = req.param('THISTIME');
+    console.log(id +" "+time)
     connection.query("SELECT * FROM `uidd2018_groupI`.`mytable` WHERE id = \""+id+"\";",(err,rows,fields)=>{ 
       if(err) console.log("read err");
       else{

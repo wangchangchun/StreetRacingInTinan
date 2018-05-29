@@ -20,9 +20,10 @@
 }
 #exit{
   position:relative;
-  max-width: 20vw;
+  max-width: 6vw;
   padding-top:5%;
 }
+/*
 #testData{
 
   z-index:10;
@@ -32,16 +33,29 @@
   font-size:x-large;
   font-weight:800;
   color:black;
-}
+}*/
 #record{
 
   z-index:10;
   position:absolute;
   max-width:60vw;
-  height:50vh;
-  margin-top:0%;
+  height:auto;
+  margin-top:-20%;
   left:30%;
-  font-size:large;
-  font-weight:600;
+  font-size:medium;
+  /*font-weight:600;*/
   color:black;
+}
+#return{
+  position:relative;
+    z-index:10;
+    max-width:10vw;
+  padding-top:20%;
+  left:5%;
+}
+#share{
+    position:relative;
+    z-index: 10;
+    max-width:10vw;
+
 }

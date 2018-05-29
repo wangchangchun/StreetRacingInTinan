@@ -43,7 +43,7 @@ $(document).ready(function() {
       },
       success: function(data) {
         $("#ajax_content").text(data)
-          $("#bg_setting").html("<img class='img-fuild' id='backgroundL' src='LOGIN.png'>");
+        $("#bg_setting").html("<img class='img-fuild' id='backgroundL' src='LOGIN.png'>");
         $("#login_button").show();
         $("#sign_up_button").show();
         $("#NAME_word").hide();
