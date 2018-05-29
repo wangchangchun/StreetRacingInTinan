@@ -65,7 +65,7 @@
   margin-left:60%;
   margin-top:8%;
   width:60%;
-  height:1.5em;
+  height:1.75em;
 }
 #PASSWORD_text
 {
@@ -74,9 +74,9 @@
   font-size:16px;
   position:relative;
   margin-left:60%;
-  margin-top:5%;
+  margin-top:8%;
   width:60%;
-  height:1.5em;
+  height:1.75em;
 
 }
 #NAME_text
@@ -89,7 +89,7 @@
   margin-left:60%;
   margin-top:8%;
   width:60%;
-  height:1.5em;
+  height:1.75em;
   display:none;
 }
 #ajax_content
@@ -99,3 +99,12 @@
   left:3%;
   color:white;
 }
+
+#fb_login{
+  position:relative;
+  left:50%;
+  margin-top:5%;
+
+
+}
+

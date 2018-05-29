@@ -1,12 +1,18 @@
+const fs = require('fs');
+var http = require('http');
+var https = require('https');
+var privateKey  = fs.readFileSync('private.key', 'utf8');
+var certificate = fs.readFileSync('certificate.crt', 'utf8');
+var ca_bundle = fs.readFileSync('ca_bundle.crt', 'utf8');
+var credentials = {key: privateKey, cert: certificate ,ca: ca_bundle};
 const express = require('express');
 const app = express();
 const port = 10088; // 請改成各組分配的port
 const bodyParser = require('body-parser');
 const urlencodedParser = bodyParser.urlencoded({extended:true});
-const fs = require('fs');
 //const config = require('./config');
 const mysql = require('mysql');
-
+const request = require('request');
 const config = {
     host:'localhost',
     user:'uidd2018_groupI',
@@ -14,7 +20,7 @@ const config = {
     database:'uidd2018_groupI'
 };
 
-app.listen(port);
+//app.listen(port);
 app.use(express.static(__dirname));
 var connection;
 function handleDisconnect() {
@@ -74,7 +80,7 @@ app.post("/public/login_data",urlencodedParser,function(req, res) {
   var pw = req.param('PASSWORD');
   var notfound=0;
   if(req.body.ID==""||req.body.PASSWORD==""){
-    res.send('please fill all blanks');
+    res.send("0");
   }
   else{
 	  var sqls = "SELECT * FROM `mytable` WHERE id = '"+id+"'";
@@ -84,15 +90,26 @@ app.post("/public/login_data",urlencodedParser,function(req, res) {
 		for( var i = 0 ; i < result.length ; i++){
 			if(result[i].id==id) {
 				notfound=1;
-				if(result[i].pw==pw) res.send('Login succeed');
-				else res.send('Login failed');
+				if(result[i].pw==pw) res.send('1');
+				else res.send('2');
 				break;
 			}
 		}
-		if(notfound == 0)res.send('Login failed');			
+		if(notfound == 0)res.send('2');			
 	  }); 
   }	  
 });
+app.post("/public/fb_read",urlencodedParser,function(req, res) {
+  var fb_id = req.param("fb_id")
+    var fb_name = req.param("fb_name")
+    connection.query("SELECT * FROM `uidd2018_groupI`.`mytable` WHERE id = \""+fb_id+"\";",(err,rows,fields)=>{ 
+      var sql = ""  
+      if(rows.length==0)
+			     sql = "INSERT INTO `mytable` ( name , id ) VALUES ('"+fb_name+"','"+fb_id+"')";
+          
+
+    }) 
+})
 app.post("/gameStart/readRecord",urlencodedParser,function(req,res){
     var id = req.param('ID');
     //console.log(id);
@@ -125,3 +142,9 @@ app.post("/javascript-racer/saveRecord",urlencodedParser,function(req,res){
 
     })
 })
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
+httpsServer.listen(port,() => {
+      console.log(`Listening on port ${port}`)
+            })
+
