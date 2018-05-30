@@ -4,12 +4,12 @@
 /****************************************/
 
 body          { font-family: Arial, Helvetica, sans-serif; }
-#stats        { border: 2px solid black; }
+/*#stats        { border: 2px solid black; }
 #controls     { width: 28em; float: left; padding: 1em; font-size: 0.7em; }
 #controls th  { text-align: right; vertical-align: middle; }
-#instructions { clear: left; float: left; width: 17em; padding: 1em; border: 1px solid black; box-shadow: 0 0 5px black; }
-#racer        { position: relative; z-index: 0; width: 640px; height: 480px; margin-left: 20em; border: 2px solid black; }
-#canvas       { position: absolute; z-index: 0; width: 640px; height: 480px; z-index: 0; background-color: #72D7EE; }
+#instructions { clear: left; float: left; width: 17em; padding: 1em; border: 1px solid black; box-shadow: 0 0 5px black; }*/
+#racer        { position: relative; z-index: 0; width: 95vw; height: 95vh; border: 2px solid black; }
+#canvas       { position: absolute; z-index: 0; width: 95vw; height: 95vh; z-index: 0; background-color: #72D7EE; }
 #mute         { background-position:   0px 0px; width: 32px; height: 32px; background: url(images/mute.png); display: inline-block; cursor: pointer; position: absolute; margin-left: 20em; }
 #mute.on      { background-position: -32px 0px; }
 #introduction { position: absolute; z-index: 0; width: 400px; height: 320px; background-color: #B0E0E6; opacity: 0.8;}
@@ -18,7 +18,7 @@ body          { font-family: Arial, Helvetica, sans-serif; }
 /* rudimentary heads up display (only used in v4) */
 /**************************************************/
 
-#hud                   { position: absolute; z-index: 1; width: 640px; padding: 5px 0; font-family: Verdana, Geneva, sans-serif; font-size: 0.8em; background-color: rgba(255,0,0,0.4); color: black; border-bottom: 2px solid black; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
+#hud                   { position: absolute; z-index: 1; width: 95vw; padding: 5px 0; font-family: Verdana, Geneva, sans-serif; font-size: 0.8em; background-color: rgba(255,0,0,0.4); color: black; border-bottom: 2px solid black; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
 #hud .hud              { background-color: rgba(255,255,255,0.6); padding: 5px; border: 1px solid black; margin: 0 5px; transition-property: background-color; transition-duration: 2s; -webkit-transition-property: background-color; -webkit-transition-duration: 2s; }
 #hud #speed            { float: right; }
 #hud #current_lap_time { float: left;  }
@@ -28,10 +28,10 @@ body          { font-family: Arial, Helvetica, sans-serif; }
 #hud .fastest          { background-color: rgba(255,215,0,0.5); }
 
 /***********************virtual button**************************/
-#up { position:absolute; z-index:1; width: 40px; height:40px; left:850px; top:390px; background-image:url("images/up.png"); background-size:contain; border:0; border-radius:14px; opacity:0.5; cursor:pointer; outline:none}
-#down { position:absolute; z-index:1; width: 40px; height:40px; left:850px; top:440px; background-image:url("images/down.png"); background-size:contain; border:0; border-radius:14px; opacity:0.5; cursor:pointer; outline:none}
-#left { position:absolute; z-index:1; width: 40px; height:40px; left:400px; top:415px; background-image:url("images/left.png"); background-size:contain; border:0; border-radius:14px; opacity:0.5; cursor:pointer; outline:none}
-#right { position:absolute; z-index:1; width: 40px; height:40px; left:450px; top:415px; background-image:url("images/right.png"); background-size:contain; border:0; border-radius:14px; opacity:0.5; cursor:pointer; outline:none}
+#up { position:absolute; z-index:1; width: 75px; height:75px; left:1000px; top:415px; background-image:url("images/up.png"); background-size:contain; border:0; border-radius:28px; opacity:0.5; cursor:pointer; outline:none}
+#down { position:absolute; z-index:1; width: 75px; height:75px; left:1000px; top:515px; background-image:url("images/down.png"); background-size:contain; border:0; border-radius:28px; opacity:0.5; cursor:pointer; outline:none}
+#left { position:absolute; z-index:1; width: 75px; height:75px; left:200px; top:465px; background-image:url("images/left.png"); background-size:contain; border:0; border-radius:28px; opacity:0.5; cursor:pointer; outline:none}
+#right { position:absolute; z-index:1; width: 75px; height:75px; left:300px; top:465px; background-image:url("images/right.png"); background-size:contain; border:0; border-radius:28px; opacity:0.5; cursor:pointer; outline:none}
 
 /***********************virtual button**************************/
 

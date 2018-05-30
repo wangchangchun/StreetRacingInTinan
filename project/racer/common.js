@@ -126,7 +126,7 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
           update(step);
         }
         render();
-        stats.update();
+        //stats.update();
         last = now;
         requestAnimationFrame(frame, canvas);
       }
@@ -151,7 +151,6 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
       result[n] = document.createElement('img');
       Dom.on(result[n], 'load', onload);
       result[n].src = "images/" + name + ".png";
-      //result[n].src = "res/" + name + ".png";
     }
   },
 
@@ -175,7 +174,7 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
   },
 
   //---------------------------------------------------------------------------
-
+/*
   stats: function(parentId, id) { // construct mr.doobs FPS counter - along with friendly good/bad/ok message box
 
     var result = new Stats();
@@ -200,7 +199,7 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
       msg.style.borderColor = color;
     }, 5000);
     return result;
-  },
+  },*/
 
   //---------------------------------------------------------------------------
 
@@ -298,8 +297,8 @@ var Render = {
   sprite: function(ctx, width, height, resolution, roadWidth, sprites, sprite, scale, destX, destY, offsetX, offsetY, clipY) {
 
                     //  scale for projection AND relative to roadWidth (for tweakUI)
-    var destW  = (sprite.w * scale * width/2) * (SPRITES.SCALE * roadWidth);
-    var destH  = (sprite.h * scale * width/2) * (SPRITES.SCALE * roadWidth);
+    var destW  = (sprite.w * scale * width/2) * (SPRITES.SCALE * roadWidth)*2;
+    var destH  = (sprite.h * scale * width/2) * (SPRITES.SCALE * roadWidth)*2;
 
     destX = destX + (destW * (offsetX || 0));
     destY = destY + (destH * (offsetY || 0));
@@ -323,7 +322,7 @@ var Render = {
     else
       sprite = (updown > 0) ? SPRITES.PLAYER_UPHILL_STRAIGHT : SPRITES.PLAYER_STRAIGHT;
 
-    Render.sprite(ctx, width, height, resolution, roadWidth, sprites, sprite, scale, destX, destY + bounce, -0.5, -1);
+    Render.sprite(ctx, width/4, height/4, resolution, roadWidth, sprites, sprite, scale, destX, destY + bounce, -0.5, -1);
   },
 
   //---------------------------------------------------------------------------
@@ -361,8 +360,8 @@ var KEY = {
 // Set COLORS
 var COLORS = {
   SKY:  '#72D7EE',
-  TREE: '#005108',
-  FOG:  '#005108',
+  TREE: '#CC6600',
+  FOG:  '#CC6600',
   INTERSECTION: {road: '#696969', grass: '#696969', rumble: '#696969'},
   LIGHT:  { road: '#696969', grass: '#663300', rumble: '#696969', lane: '#CCCCCC'},
   DARK:   { road: '#696969', grass: '#663300', rumble: '#696969'},
@@ -372,9 +371,9 @@ var COLORS = {
 
 
 var BACKGROUND = {
-  HILLS: { x:   5, y:   5, w: 1280, h: 480 },
-  SKY:   { x:   5, y: 495, w: 1280, h: 480 },
-  TREES: { x:   5, y: 985, w: 1280, h: 480 }
+  HILLS: { x:   5, y:   2505, w: 5333, h: 1990 },
+  SKY:   { x:   5, y: 5, w: 5333, h: 2500 },
+  TREES: { x:   5, y: 4500, w: 5333, h: 900 }
 };
 
 var SPRITES = {
@@ -406,16 +405,17 @@ var SPRITES = {
   CAR02:                  { x: 1383, y:  825, w:   80, h:   59 },
   CAR04:                  { x: 1383, y:  894, w:   80, h:   57 },
   CAR01:                  { x: 1205, y: 1018, w:   80, h:   56 },
-  PLAYER_UPHILL_LEFT:     { x: 1383, y:  961, w:   80, h:   45 },
-  PLAYER_UPHILL_STRAIGHT: { x: 1295, y: 1018, w:   80, h:   45 },
-  PLAYER_UPHILL_RIGHT:    { x: 1385, y: 1018, w:   80, h:   45 },
-  PLAYER_LEFT:            { x:  995, y:  480, w:   80, h:   41 },
-  PLAYER_STRAIGHT:        { x: 1085, y:  480, w:   80, h:   41 },
-  PLAYER_RIGHT:           { x:  995, y:  531, w:   80, h:   41 },
-  TEST:{x:1383,y:825,w:80,h:126}
+  PLAYER_UPHILL_LEFT:     { x: 5180, y: 2160, w:  400, h:   200 },
+  PLAYER_UPHILL_STRAIGHT: { x: 5180, y: 2160, w:  400, h:   200 },
+  PLAYER_UPHILL_RIGHT:    { x: 5180, y: 2160, w: 400, h:   200 },
+  PLAYER_LEFT:            { x:  5180, y:  2160, w:  400, h:   200 },
+  PLAYER_STRAIGHT:        { x: 5180, y:  2160, w:  400, h:   200 },
+  PLAYER_RIGHT:           { x:  5180, y:  2160, w:  400, h:   200 },
+  TEST:{x:70,y:15,w:600,h:700}
 };
 
-SPRITES.SCALE = 0.3 * (1/SPRITES.PLAYER_STRAIGHT.w) // the reference sprite width should be 1/3rd the (half-)roadWidth
+SPRITES.SCALE = 0.3 * (1/SPRITES.PLAYER_STRAIGHT.w)*2 // the reference sprite width should be 1/3rd the (half-)roadWidth
+//SPRITES.SCALE = 0.3*(1/80)
 
 SPRITES.BILLBOARDS = [SPRITES.BILLBOARD01, SPRITES.BILLBOARD02, SPRITES.BILLBOARD03, SPRITES.BILLBOARD04, SPRITES.BILLBOARD05, SPRITES.BILLBOARD06, SPRITES.BILLBOARD07, SPRITES.BILLBOARD08, SPRITES.BILLBOARD09];
 SPRITES.PLANTS     = [SPRITES.TREE1, SPRITES.TREE2, SPRITES.DEAD_TREE1, SPRITES.DEAD_TREE2, SPRITES.PALM_TREE, SPRITES.BUSH1, SPRITES.BUSH2, SPRITES.CACTUS, SPRITES.STUMP, SPRITES.BOULDER1, SPRITES.BOULDER2, SPRITES.BOULDER3];
