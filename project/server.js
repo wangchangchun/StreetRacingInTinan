@@ -1,10 +1,10 @@
 const fs = require('fs');
 var http = require('http');
 var https = require('https');
-var privateKey  = fs.readFileSync('private.key', 'utf8');
-var certificate = fs.readFileSync('certificate.crt', 'utf8');
-var ca_bundle = fs.readFileSync('ca_bundle.crt', 'utf8');
-var credentials = {key: privateKey, cert: certificate ,ca: ca_bundle};
+var privateKey  = fs.readFileSync('./ssl/private.key','utf8');
+var certificate = fs.readFileSync('./ssl/certificate.crt','utf8');
+var ca_bundle = fs.readFileSync('./ssl/ca_bundle.crt','utf8');
+var credentials = {key: privateKey, cert: certificate};
 const express = require('express');
 const app = express();
 const port = 10088; // 請改成各組分配的port
@@ -64,7 +64,7 @@ app.post("/public/sign_up_data",urlencodedParser,function(req,res){
 			if(result[i].id==id) {res.send('Your id has been used.');notfound=1;break;}
 		}
 		if(notfound == 0){
-			var sqli = "INSERT INTO `mytable` ( name , id , pw) VALUES ('"+name+"','"+id+"','"+pw+"')";
+			var sqli = "INSERT INTO `mytable` ( name , id , pw,play) VALUES ('"+name+"','"+id+"','"+pw+"',0)";
 			console.log(sqli);
 			connection.query(sqli, function(err,result){
 				if(err) throw err;
@@ -102,11 +102,14 @@ app.post("/public/login_data",urlencodedParser,function(req, res) {
 app.post("/public/fb_read",urlencodedParser,function(req, res) {
   var fb_id = req.param("fb_id")
     var fb_name = req.param("fb_name")
+    console.log(fb_id + " "+fb_name)
     connection.query("SELECT * FROM `uidd2018_groupI`.`mytable` WHERE id = \""+fb_id+"\";",(err,rows,fields)=>{ 
       var sql = ""  
-      if(rows.length==0)
-			     sql = "INSERT INTO `mytable` ( name , id ) VALUES ('"+fb_name+"','"+fb_id+"')";
-          
+      if(rows.length==0){
+			     sql = "INSERT INTO `mytable` ( name , id ,play) VALUES ('"+fb_name+"','"+fb_id+"',0)";
+            connection.query(sql)
+      }
+      res.send("login succeed!")
 
     }) 
 })
@@ -117,7 +120,15 @@ app.post("/gameStart/readRecord",urlencodedParser,function(req,res){
     connection.query("SELECT * FROM `uidd2018_groupI`.`record` WHERE id = \""+id+"\";",(err,rows,fields)=>{ 
     for(var i=0;i<rows.length;i++)
     {
-        str = str + rows[i].time+ "<br>"
+      if(rows[i].time>60)
+      {
+          var min = Math.floor(rows[i].time/60);
+          var sec = (rows[i].time%60).toFixed(3);
+          rows[i].time = min+" min "+sec +"sec";
+      }
+      else
+        rows[i].time = rows[i].time+" sec"
+        str = str+rows[i].name+" "+ rows[i].time+ "<br>"
           console.log("i = "+i+" "+rows[i].time)
     }
     
@@ -125,21 +136,22 @@ app.post("/gameStart/readRecord",urlencodedParser,function(req,res){
     })
 
 })
-app.post("/javascript-racer/saveRecord",urlencodedParser,function(req,res){
+app.post("/racer/saveRecord",urlencodedParser,function(req,res){
     var id = req.param('ID');
     var time = req.param('THISTIME');
+    console.log(id +" "+time)
     connection.query("SELECT * FROM `uidd2018_groupI`.`mytable` WHERE id = \""+id+"\";",(err,rows,fields)=>{ 
       if(err) console.log("read err");
       else{
       var play = rows[0]['play']+1;
       var account = rows[0]['name'];
+      console.log(account)
       var update_str = "UPDATE `uidd2018_groupI`.`mytable` SET `play`="+ play+" WHERE id =\""+id+"\";";
       connection.query(update_str);
       var insert_data = "INSERT INTO `uidd2018_groupI`. `record` (id,name,num,time) VALUES(\""+id+"\",\""+account+"\","+play+","+time+");";
       connection.query(insert_data);
       }
-
-
+      res.send("OK")
     })
 })
 var httpServer = http.createServer(app);

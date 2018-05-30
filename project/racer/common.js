@@ -1,7 +1,6 @@
 //=========================================================================
 // minimalist DOM helpers
 //=========================================================================
-
 var Dom = {
 
   get:  function(id)                     { return ((id instanceof HTMLElement) || (id === document)) ? id : document.getElementById(id); },
@@ -131,7 +130,7 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
         requestAnimationFrame(frame, canvas);
       }
       frame(); // lets get this party started
-      Game.playMusic();
+//      Game.playMusic();
     });
   },
 
@@ -202,7 +201,7 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
   },*/
 
   //---------------------------------------------------------------------------
-
+/*
   playMusic: function() {
     var music = Dom.get('music');
     music.loop = true;
@@ -216,8 +215,8 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
     });
   }
 
+*/
 }
-
 //=========================================================================
 // canvas rendering helpers
 //=========================================================================
