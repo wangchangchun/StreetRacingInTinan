@@ -100,7 +100,19 @@
   <script src="stats.js"></script>
   <script src="common.js"></script>
   <script>
-
+	 ////////////////////////////API///////////////////////////////////
+	function isMobile() {
+	try{ document.createEvent("TouchEvent"); return true; }
+	catch(e){ return false;}
+	}
+	window.addEventListener("orientationchange",onOrientationchange ,false);
+	function onOrientationchange() {
+      if (window.orientation === 180 || window.orientation === 0) {
+		var locOrientation = screen.lockOrientation || screen.mozLockOrientation || screen.msLockOrientation || screen.orientation.lock;
+		locOrientation('landscape');
+      }
+	}
+	////////////////////////////API///////////////////////////////////
     var fps            = 60;                      // how many 'update' frames per second
     var step           = 1/fps;                   // how long is each frame (in seconds)
     var width          = 1024;                    // logical canvas width
