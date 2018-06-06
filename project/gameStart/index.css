@@ -40,22 +40,23 @@
   position:absolute;
   max-width:60vw;
   height:auto;
-  margin-top:-20%;
+  margin-top:auto;
   left:30%;
   font-size:medium;
   /*font-weight:600;*/
   color:black;
 }
 #return{
-  position:relative;
+  position:absolute;
     z-index:10;
     max-width:10vw;
   padding-top:20%;
   left:5%;
 }
 #share{
-    position:relative;
+    position:absolute;
     z-index: 10;
     max-width:10vw;
+    left:5%;
 
 }
