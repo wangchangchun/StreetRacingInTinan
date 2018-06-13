@@ -16,6 +16,7 @@
       <span id="current_lap_time" class="hud">Time: <span id="current_lap_time_value" class="value">0.0</span></span> 
       <span id="last_lap_time"    class="hud">Last Lap: <span id="last_lap_time_value" class="value">0.0</span></span>
       <span id="fast_lap_time"    class="hud">Fastest Lap: <span id="fast_lap_time_value" class="value">0.0</span></span>
+      <span id="position"         class="hud">position: <span id="position_value" class="value">0</span></span>
     </div>
     <canvas id="canvas">
       Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element
@@ -78,7 +79,7 @@
       }
 	}
 	////////////////////////////API///////////////////////////////////
-=======
+//=======
 var id = window.location.href.split("?")[1];
 $("#return").click(()=>{
     document.location.href= "../gameStart/index.html?"+id;
@@ -140,7 +141,8 @@ $("#return").click(()=>{
       speed:            { value: null, dom: Dom.get('speed_value')            },
       current_lap_time: { value: null, dom: Dom.get('current_lap_time_value') },
       last_lap_time:    { value: null, dom: Dom.get('last_lap_time_value')    },
-      fast_lap_time:    { value: null, dom: Dom.get('fast_lap_time_value')    }
+      fast_lap_time:    { value: null, dom: Dom.get('fast_lap_time_value')    },
+      position:         { value: null, dom: Dom.get('position_value')}
     }
 
     //=========================================================================
@@ -264,6 +266,7 @@ $("#return").click(()=>{
 
       updateHud('speed',            5 * Math.round(speed/500));
       updateHud('current_lap_time', formatTime(currentLapTime));
+      updateHud('position', position)
     }
 
 //-------------------------------------------------------------------------
