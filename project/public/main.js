@@ -14,7 +14,8 @@ $(document).ready(function() {
           }
           else if(data=='1'){
               $("#ajax_content").text("Login succeed")
-              document.location.href="../gameStart/index.html?"+$("#ID_text").val();
+              window.sessionStorage.setItem("playId", $("#ID_text").val());
+              document.location.href="../gameStart/index.html";
           }
           else{
               $("#ajax_content").text("Login failed")
@@ -75,7 +76,7 @@ window.fbAsyncInit = function() {
     version    : 'v2.11' // use graph api version 2.8
   });
   FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
+ //   statusChangeCallback(response);
   });
 };
 (function(d, s, id) {
@@ -101,17 +102,11 @@ function testAPI() {
       },
       success:function(data){
               $("#ajax_content").text(data)
-              document.location.href="../gameStart/index.html?"+fb_id;
+              window.sessionStorage.setItem("playId",response.id );
+              document.location.href="../gameStart/index.html";
         
       }
     })
 
   });
 }
-$("#fb_logout").click(()=>{
-
-  FB.logout(function(response) {
-    alert('已成功登出!');
-    document.location.href="https://luffy.ee.ncku.edu.tw:1235/index.html";
-  });
-});
