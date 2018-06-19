@@ -30,6 +30,10 @@
   <button type="button" id="right" onmousedown="keyRight=true" onmouseup="keyRight=false" onmouseout="keyRight=false" ontouchstart="keyRight=true" ontouchend="keyRight=false"></button>
   <!-----------------virtual button---------------------->
 
+  <div id = "destination">
+    <img id = "place" src = "./images/res/castle.png"/>
+  </div>
+
   <div id = "introduction">
     <p>這是就是接官亭啊，<br>
       看起來還真是氣派的牌坊呢…<br>
@@ -44,7 +48,7 @@
       唉…仔細想想這五條港還真是繁榮的地方，<br>
       一不小心走著走著就走到這裡了，<br>
       好…就先在這裡附近逛逛吧。</p>
-    <img id = "return" src = "../gameStart/src/RETURN.png">
+    <img id = "return" src = "./gameStart/src/RETURN.png">
   </div>
 
 <!--
@@ -107,6 +111,14 @@ $("#return").click(()=>{
     var currentLapTime = 0;                       // current lap time
     var lastLapTime    = null;                    // last lap time
 
+    // for selecting track and car
+    var track_num = window.sessionStorage.getItem("track_num");
+    var car_num = window.sessionStorage.getItem("car_num");
+    if(track_num == 1)document.getElementById("place").setAttribute("src","./images/res/castle.png");
+    else if(track_num == 2)document.getElementById("place").setAttribute("src","./images/res/hall.png");
+    else if(track_num == 3)document.getElementById("place").setAttribute("src","./images/res/temple.png");
+    else if(track_num == 4)document.getElementById("place").setAttribute("src","./images/res/park.png");
+
     var keyLeft        = false;
     var keyRight       = false;
     var keyFaster      = false;
@@ -135,11 +147,16 @@ $("#return").click(()=>{
       var dx            = dt * 2 * speedPercent; // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
       var startPosition = position;
 
-      if(!gameover)document.getElementById("introduction").style.display = 'none';
+      if(!gameover){
+        document.getElementById("introduction").style.display = 'none';
+        document.getElementById("destination").style.display = 'none';
+      }
       else{
-        document.getElementById("introduction").style.display = 'block';  
+        //document.getElementById("introduction").style.display = 'block';  
         document.getElementById("introduction").style.top = '100px';
         document.getElementById("introduction").style.left = '600px';
+        document.getElementById("destination").style.display = 'block';
+        $('#place').animate({height: "300px",width: "820px",left: "7%",top: "4%"},5000);
       }
 
       updateCars(dt, playerSegment, playerW);
@@ -436,7 +453,7 @@ function addSegment(curve, y) {
     curve: curve,
     sprites: [],
     cars: [],
-    color: !(Math.floor(n/rumbleLength)%100) ? COLORS.INTERSECTION : !(Math.floor((n - 3)/rumbleLength)%100) ? COLORS.INTERSECTION : !(Math.floor((n - 6)/rumbleLength)%100) ? COLORS.INTERSECTION : !(Math.floor((n + 3)/rumbleLength)%100)? COLORS.INTERSECTION:(Math.floor(n/rumbleLength)%2)? COLORS.LIGHT:COLORS.DARK
+    color: (n > 3740)? COLORS.FINISH : !(Math.floor(n/rumbleLength)%100) ? COLORS.INTERSECTION : !(Math.floor((n - 3)/rumbleLength)%100) ? COLORS.INTERSECTION : !(Math.floor((n - 6)/rumbleLength)%100) ? COLORS.INTERSECTION : !(Math.floor((n + 3)/rumbleLength)%100)? COLORS.INTERSECTION:(Math.floor(n/rumbleLength)%2)? COLORS.LIGHT:COLORS.DARK
 
   });
 }
@@ -520,22 +537,74 @@ function addDownhillToEnd(num) {
 function resetRoad() {
   segments = [];
 
-  addStraight(ROAD.LENGTH.MEDIUM);
-  addCurve(ROAD.LENGTH.MEDIUM,-ROAD.CURVE.HARD,ROAD.HILL.NONE);
-  addCurve(ROAD.LENGTH.MEDIUM,ROAD.CURVE.MEDIUM,ROAD.HILL.NONE);
-  addCurve(ROAD.LENGTH.LONG,ROAD.CURVE.MEDIUM,ROAD.HILL.NONE);
-  addStraight(ROAD.LENGTH.LONG);
-  addCurve(ROAD.LENGTH.MEDIUM,ROAD.CURVE.HARD,ROAD.HILL.NONE);
-  addHill(ROAD.LENGTH.MEDIUM,ROAD.HILL.MEDIUM);
-  addHill(ROAD.LENGTH.SHORT,-ROAD.HILL.MEDIUM);
-  addHill(ROAD.LENGTH.MEDIUM,ROAD.HILL.HIGH);
-  addHill(ROAD.LENGTH.MEDIUM,-ROAD.HILL.HIGH);
-  addCurve(ROAD.LENGTH.LONG,ROAD.CURVE.HARD,ROAD.HILL.LOW);
-  addCurve(ROAD.LENGTH.MEDIUM,ROAD.CURVE.HARD,ROAD.HILL.LOW);
-  addSCurves();
-  addBumps();
-  addBumps();
-  addStraight(ROAD.LENGTH.MEDIUM);
+  if(track_num == 1){
+    addStraight(ROAD.LENGTH.MEDIUM);
+    addCurve(ROAD.LENGTH.MEDIUM,-ROAD.CURVE.HARD,ROAD.HILL.NONE);
+    addCurve(ROAD.LENGTH.MEDIUM,ROAD.CURVE.MEDIUM,ROAD.HILL.NONE);
+    addCurve(ROAD.LENGTH.LONG,ROAD.CURVE.MEDIUM,ROAD.HILL.NONE);
+    addStraight(ROAD.LENGTH.LONG);
+    addCurve(ROAD.LENGTH.MEDIUM,ROAD.CURVE.HARD,ROAD.HILL.NONE);
+    addHill(ROAD.LENGTH.MEDIUM,ROAD.HILL.MEDIUM);
+    addHill(ROAD.LENGTH.SHORT,-ROAD.HILL.MEDIUM);
+    addHill(ROAD.LENGTH.MEDIUM,ROAD.HILL.HIGH);
+    addHill(ROAD.LENGTH.MEDIUM,-ROAD.HILL.HIGH);
+    addCurve(ROAD.LENGTH.LONG,ROAD.CURVE.HARD,ROAD.HILL.LOW);
+    addCurve(ROAD.LENGTH.MEDIUM,ROAD.CURVE.HARD,ROAD.HILL.LOW);
+    addSCurves();
+    addBumps();
+    addBumps();
+    addStraight(ROAD.LENGTH.MEDIUM);
+  }
+  else if(track_num == 2){
+    addStraight(ROAD.LENGTH.MEDIUM);
+    addCurve(ROAD.LENGTH.SHORT,ROAD.CURVE.HARD,ROAD.HILL.NONE);
+    addStraight(ROAD.LENGTH.MEDIUM);
+    addCurve(ROAD.LENGTH.MEDIUM,ROAD.CURVE.HARD,ROAD.HILL.MEDIUM);
+    addHill(ROAD.LENGTH.MEDIUM,ROAD.HILL.HIGH);
+    addCurve(ROAD.LENGTH.SHORT,ROAD.CURVE.MEDIUM,ROAD.HILL.MEDIUM);
+    addHill(ROAD.LENGTH.SHORT,ROAD.HILL.HIGH);
+    addSCurves();
+    addSCurves();
+    addHill(150,-ROAD.HILL.HIGH);
+    addCurve(ROAD.LENGTH.SHORT,-ROAD.CURVE.HARD,-ROAD.HILL.MEDIUM);
+    addCurve(ROAD.LENGTH.SHORT,ROAD.CURVE.HARD,-ROAD.HILL.MEDIUM);
+    addCurve(ROAD.LENGTH.SHORT,ROAD.CURVE.HARD,-ROAD.HILL.MEDIUM);
+    addCurve(ROAD.LENGTH.SHORT,-ROAD.CURVE.HARD,-ROAD.HILL.MEDIUM);
+    addCurve(ROAD.LENGTH.SHORT,-ROAD.CURVE.HARD,ROAD.HILL.NONE);
+    addStraight(ROAD.LENGTH.MEDIUM);
+  }
+  else if(track_num == 3){
+    addStraight(ROAD.LENGTH.MEDIUM);
+    addCurve(ROAD.LENGTH.SHORT,-ROAD.CURVE.HARD,ROAD.HILL.NONE);
+    addHill(ROAD.LENGTH.MIDIUM,-ROAD.HILL.LOW);
+    addCurve(ROAD.LENGTH.SHORT,ROAD.CURVE.MEDIUM,ROAD.HILL.NONE);
+    addCurve(ROAD.LENGTH.MEDIUM,-ROAD.CURVE.HARD,ROAD.HILL.NONE);
+    addHill(ROAD.LENGTH.LONG,-ROAD.HILL.HIGH);
+    addSCurves();
+    addStraight(ROAD.LENGTH.SHORT);
+    addSCurves();
+    addStraight(ROAD.LENGTH.SHORT);
+    addCurve(ROAD.LENGTH.SHORT,ROAD.CURVE.HARD,-ROAD.HILL.LOW);
+    addBumps();
+    addHill(ROAD.LENGTH.LONG,-ROAD.HILL.HIGH);
+  }
+  else if(track_num == 4){
+    addCurve(ROAD.LENGTH.MEDIUM,-ROAD.CURVE.EASY,ROAD.HILL.NONE);
+    addSCurves();
+    addBumps();
+    addBumps();
+    addBumps();
+    addCurve(ROAD.LENGTH.SHORT,-ROAD.CURVE.EASY,ROAD.HILL.NONE);
+    addSCurves();
+    addStraight(ROAD.LENGTH.SHORT);
+    addCurve(ROAD.LENGTH.SHORT,ROAD.CURVE.EASY,ROAD.HILL.NONE);
+    addCurve(ROAD.LENGTH.MEDIUM,-ROAD.CURVE.HARD,ROAD.HILL.NONE);
+    addStraight(ROAD.LENGTH.SHORT);
+    addCurve(ROAD.LENGTH.MEDIUM,ROAD.CURVE.HARD,ROAD.HILL.NONE);
+    addCurve(ROAD.LENGTH.MEDIUM,ROAD.CURVE.HARD,ROAD.HILL.NONE);
+    addStraight(ROAD.LENGTH.MEDIUM);
+  }
+
   addDownhillToEnd();
 
   resetSprites();
@@ -551,45 +620,29 @@ function resetRoad() {
 
 function resetSprites() {
   var n, i;
-  for(n = 10;n < 3500;n += 10){
-    if(n < 1000)addSprite(n,SPRITES.BUILDING2_LEFT,-4);
+  for(n = 1000;n < 3500;n += 10){
+
+    // Avoid sprites appearing on intersections
+    if((Math.floor(n/rumbleLength)%100 == 0) || (Math.floor((n - 3)/rumbleLength)% 100 == 0) || (Math.floor((n - 6)/rumbleLength)%100 == 0))continue;
+    
+    if(n < 1000)addSprite(n,SPRITES.TREE1,-1.2);
     else if(n < 2000)addSprite(n,SPRITES.TREE2,-1.2);
     else addSprite(n,SPRITES.TREE3,-1.2);
+  
   }
-  for(n = 15;n < 3500;n += 10){
+  for(n = 1005;n < 3500;n += 10){
+
+    // Avoid sprites appearing on intersections
+    if((Math.floor(n/rumbleLength)%100 == 0) || (Math.floor((n - 3)/rumbleLength)%100 == 0) || (Math.floor((n - 6)/rumbleLength)%100) == 0)continue;
+    
     if(n < 1000)addSprite(n,SPRITES.TREE1,1.2);
     else if(n < 2000)addSprite(n,SPRITES.TREE2,1.2);
     else addSprite(n,SPRITES.TREE3,1.2);
+  
   }
 
   // For the finishing line
-  addSprite(3750,SPRITES.MONUMENT_LEFT,-1.5);
-
-    /*addSprite(20,  SPRITES.BILLBOARD07, -1);
-    addSprite(40,  SPRITES.BILLBOARD06, -1);
-    addSprite(60,  SPRITES.BILLBOARD08, -1);
-    addSprite(80,  SPRITES.BILLBOARD09, -1);
-    addSprite(100, SPRITES.BILLBOARD01, -1);
-    addSprite(120, SPRITES.BILLBOARD02, -1);
-    addSprite(140, SPRITES.BILLBOARD03, -1);
-    addSprite(160, SPRITES.BILLBOARD04, -1);
-    addSprite(180, SPRITES.BILLBOARD05, -1);
-
-    addSprite(240,                  SPRITES.BILLBOARD07, -1.2);
-    addSprite(240,                  SPRITES.BILLBOARD06,  1.2);
-    addSprite(segments.length - 25, SPRITES.BILLBOARD07, -1.2);
-    addSprite(segments.length - 25, SPRITES.BILLBOARD06,  1.2);
-
-    for(n = 10 ; n < 200 ; n += 4 + Math.floor(n/100)) {
-    addSprite(n, SPRITES.PALM_TREE, 0.5 + Math.random()*0.5);
-    addSprite(n, SPRITES.PALM_TREE,   1 + Math.random()*2);
-    }
-
-    for(n = 250 ; n < 1000 ; n += 5) {
-    addSprite(n,     SPRITES.COLUMN, 1.1);
-    addSprite(n + Util.randomInt(0,5), SPRITES.TREE1, -1 - (Math.random() * 2));
-    addSprite(n + Util.randomInt(0,5), SPRITES.TREE2, -1 - (Math.random() * 2));
-    }*/
+  //addSprite(3750,SPRITES.MONUMENT_LEFT,-1.5);  
 
 }
 
