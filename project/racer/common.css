@@ -9,8 +9,9 @@ body          { font-family: Arial, Helvetica, sans-serif; }
 #mute         { background-position:   0px 0px; width: 32px; height: 32px; background: url(images/mute.png); display: inline-block; cursor: pointer; position: absolute; margin-left: 20em; }
 #mute.on      { background-position: -32px 0px; }
 #introduction { position: absolute; z-index: 0; width: 50vw; height: 360px; background-color: #B0E0E6; opacity: 0.8;}
-#return       { position: absolute; z-index: 0; width: 100px; height: 20px; top:90%;left:80%;  }
-
+#return       { position: absolute; z-index: 0; width: 100px; height: 20px; top:20%;left:80%;  }
+#destination  { position: absolute; z-index: 0; width: 60vw; height: 300px; left: 15%; top: 10%;}
+#place        { position: absolute; z-index: 0; width:10vw; height: 50px; left: 48%; top: 65%;}
 /**************************************************/
 /* rudimentary heads up display (only used in v4) */
 /**************************************************/
@@ -26,10 +27,10 @@ body          { font-family: Arial, Helvetica, sans-serif; }
 
 
 /***********************virtual button**************************/
-#up { position:absolute; z-index:1; width: 100px; height:100px; left:80vw; top:350px; background-image:url("images/up.png"); background-size:contain; border:0; border-radius:28px; opacity:0.5; cursor:pointer; outline:none}
-#down { position:absolute; z-index:1; width: 100px; height:100px; left:80vw; top:450px; background-image:url("images/down.png"); background-size:contain; border:0; border-radius:28px; opacity:0.5; cursor:pointer; outline:none}
-#left { position:absolute; z-index:1; width: 100px; height:100px; left:100px; top:415px; background-image:url("images/left.png"); background-size:contain; border:0; border-radius:28px; opacity:0.5; cursor:pointer; outline:none}
-#right { position:absolute; z-index:1; width: 100px; height:100px; left:200px; top:415px; background-image:url("images/right.png"); background-size:contain; border:0; border-radius:28px; opacity:0.5; cursor:pointer; outline:none}
+#up { position:absolute; z-index:1; width: 100px; height:100px; left:80vw; top:350px; background-image:url("images/up.png"); background-size:contain; border:0; border-radius:28px; opacity:0.5; cursor:pointer; outline:none; display:none;}
+#down { position:absolute; z-index:1; width: 100px; height:100px; left:80vw; top:450px; background-image:url("images/down.png"); background-size:contain; border:0; border-radius:28px; opacity:0.5; cursor:pointer; outline:none; display:none;}
+#left { position:absolute; z-index:1; width: 100px; height:100px; left:100px; top:415px; background-image:url("images/left.png"); background-size:contain; border:0; border-radius:28px; opacity:0.5; cursor:pointer; outline:none; display:none;}
+#right { position:absolute; z-index:1; width: 100px; height:100px; left:200px; top:415px; background-image:url("images/right.png"); background-size:contain; border:0; border-radius:28px; opacity:0.5; cursor:pointer; outline:none; display:none;}
 
 /***********************virtual button**************************/
 

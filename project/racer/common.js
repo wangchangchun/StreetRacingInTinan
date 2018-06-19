@@ -358,25 +358,25 @@ var KEY = {
 
 // Set COLORS
 var COLORS = {
-  SKY:  '#72D7EE',
+  SKY:  '#00FFFF',
   TREE: '#CC6600',
   FOG:  '#CC6600',
   INTERSECTION: {road: '#696969', grass: '#696969', rumble: '#696969'},
   LIGHT:  { road: '#696969', grass: '#663300', rumble: '#696969', lane: '#CCCCCC'},
   DARK:   { road: '#696969', grass: '#663300', rumble: '#696969'},
   START:  { road: 'white',   grass: 'white', rumble: 'white'},
-  FINISH: { road: 'black',   grass: 'black', rumble: 'black'}
+  FINISH: { road: '#663300',   grass: '#663300', rumble: '#663300'}
 };
 
 
 var BACKGROUND = {
-  HILLS: { x:   5, y:   2505, w: 5333, h: 1990 },
-  SKY:   { x:   5, y: 5, w: 5333, h: 2500 },
-  TREES: { x:   5, y: 4500, w: 5333, h: 900 }
+  HILLS: { x:   5, y:   2400, w: 2700, h: 900 },
+  SKY:   { x:   0, y: 5, w: 2500, h: 1300 },
+  TREES: { x:   5, y: 1310, w: 2700, h: 1080 }
 };
 
 var SPRITES = {
-  TREE1:                  { x: 70, y: 15, w: 600, h: 700},
+  TREE1:                  { x: 30, y: 15, w: 600, h: 700},
   TREE2:                  { x: 70, y: 755, w: 600, h:780},
   TREE3:                  { x: 70, y: 1645, w: 600, h: 780},
   TREE4:                  { x: 30, y: 2495, w: 630, h: 750},
@@ -398,13 +398,13 @@ var SPRITES = {
   BUILDING3_LEFT:         { x: 3640, y: 2345, w: 1000, h: 1220},
   MONUMENT_LEFT:          { x: 4800, y: 3100, w: 700, h: 900},
   MONUMENT_RIGHT:         { x: 5540, y: 3100, w: 700, h: 900},
-  PLAYER_UPHILL_LEFT:     { x: 5180, y: 2160, w:  400, h:   200 },
-  PLAYER_UPHILL_STRAIGHT: { x: 5180, y: 2160, w:  400, h:   200 },
-  PLAYER_UPHILL_RIGHT:    { x: 5180, y: 2160, w: 400, h:   200 },
-  PLAYER_LEFT:            { x:  4790, y:  2160, w:  400, h:   200 },
-  PLAYER_STRAIGHT:        { x: 4790, y:  2400, w:  400, h:   200 },
+  PLAYER_UPHILL_LEFT:     { x: 4790, y: 2180, w:  400, h:   200 },
+  PLAYER_UPHILL_STRAIGHT: { x: 5180, y: 2180, w:  400, h:   200 },
+  PLAYER_UPHILL_RIGHT:    { x: 4790, y: 2400, w: 400, h:   200 },
+  PLAYER_LEFT:            { x:  4790, y:  2180, w:  400, h:   200 },
+  PLAYER_STRAIGHT:        { x: 5180, y:  2180, w:  400, h:   200 },
   PLAYER_RIGHT:           { x:  4790, y:  2400, w:  400, h:   200 },
-  TEST:{x:5180,y:2160,w:400,h:200}
+  TEST:{x:5180,y:2180,w:400,h:200}
 };
 
 SPRITES.SCALE = 0.3 * (1/SPRITES.PLAYER_STRAIGHT.w)*2 // the reference sprite width should be 1/3rd the (half-)roadWidth
