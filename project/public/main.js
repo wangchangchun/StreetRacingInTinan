@@ -1,3 +1,29 @@
+$(document).ready(function(){
+	$("#building").show().animate({
+		opacity:"1"
+	},1200)
+	$("#building").show().animate({
+		opacity:"0"
+	},500)
+	$("#building").show().animate({
+		opacity:"1"
+	},500)
+	$("#line").show().animate({
+		opacity:"1"
+	},2000)
+	$("#car").show().animate({
+		left: "32%"
+	},4000)
+	$("#btns").show().animate({
+		left: "-10%"
+	},1000)
+	$("#stuid").show().animate({
+		left: "6%"
+	},2000)
+	$("#pw").show().animate({
+		left: "6%"
+	},2000)
+})
 $(document).ready(function() {  
   $("#login_button").click(function(){
     event.preventDefault();//取消reload
@@ -14,7 +40,23 @@ $(document).ready(function() {
           }
           else if(data=='1'){
               $("#ajax_content").text("Login succeed")
-              document.location.href="../gameStart/index.html?"+$("#ID_text").val();
+			        setTimeout(function(){
+                $("#login_button").hide();
+				$("#sign_up_button").hide();
+				$("#car").hide();
+				$("#line").hide();
+				$("#stuid").hide();
+				$("#pw").hide();
+				$("#building").hide();
+				$("#logo").hide();
+				$("#ID_text").hide();
+				$("#PASSWORD_text").hide();
+				$("#fb_login").hide();
+                $("#backgroundL").css("transform","rotate(720deg) scale(0)");
+              },1500);
+			        setTimeout(function () {
+				         window.location.href ="../gameStart/index.html?"+$("#ID_text").val();
+               },4000); 
           }
           else{
               $("#ajax_content").text("Login failed")
@@ -24,11 +66,14 @@ $(document).ready(function() {
     })
   })
   $("#sign_up_button").click(function(){
-    $("#bg_setting").html("<img class='img-fuild' id='backgroundL' src='SIGNUP.png'>");
     $("#login_button").hide();
     $("#sign_up_button").hide();
     $("#NAME_text").show();
     $("#finish_button").show();
+	$("#name").show();
+  $("#name").css("top","37%");
+	$("#stuid").css("top","46%");
+	$("#pw").css("top","58%");
     $("#ID_text").css("margin-top","5%");
   })
   $("#finish_button").click(function(){
@@ -42,13 +87,15 @@ $(document).ready(function() {
         NAME: $("input[name='NAME']").val()
       },
       success: function(data) {
-        $("#ajax_content").text(data)
-        $("#bg_setting").html("<img class='img-fuild' id='backgroundL' src='LOGIN.png'>");
+        $("#ajax_content").text(data);
         $("#login_button").show();
         $("#sign_up_button").show();
         $("#NAME_word").hide();
         $("#NAME_text").hide();
         $("#finish_button").hide();
+        $("#name").hide();
+        $("#stuid").css("top","35%");
+        $("#pw").css("top","46%");
       }
     })
   })
