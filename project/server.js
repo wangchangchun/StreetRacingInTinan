@@ -8,7 +8,7 @@ var ca_bundle = fs.readFileSync('./ssl/ca_bundle.crt','utf8');
 var credentials = {key: privateKey, cert: certificate};
 const express = require('express');
 const app = express();
-const port = 10088; // 請改成各組分配的port
+const port = 10081; // 請改成各組分配的port
 const bodyParser = require('body-parser');
 const urlencodedParser = bodyParser.urlencoded({extended:true});
 //const config = require('./config');
@@ -146,6 +146,17 @@ app.post("/gameStart/readRecord",urlencodedParser,function(req,res){
   })
 
 })
+app.post("/gameStart/readAchieve",urlencodedParser,function(req,res){
+  var id = req.param('ID');
+  var str = "已解鎖成就:<br>";
+  connection.query("SELECT * FROM `uidd2018_groupI`.`achievement` WHERE id = \""+id+"\";",(err,rows,fields)=>{
+  if(rows[0].a1=1)
+    str+="初見台南<br>";
+  
+  
+  })
+  res.send(str);
+})
 app.post("/racer/saveRecord",urlencodedParser,function(req,res){
   var id = req.param('ID');
   var time = req.param('THISTIME');
@@ -164,6 +175,37 @@ app.post("/racer/saveRecord",urlencodedParser,function(req,res){
       res.send("OK")
     })
 })
+app.post("/racer/saveAchieve",urlencodedParser,function(req,res){
+  var id = req.param('ID');
+  var notfound=0;
+  var done=1;
+  var notdone=0;
+    connection.query("SELECT * FROM `uidd2018_groupI`.`achievement` WHERE id = \""+id+"\";",(err,rows,fields)=>{ 
+      if(err) console.log("read err");
+      else{
+         var sqls = "SELECT * FROM `achievement` WHERE id = '"+id+"'";
+         console.log(sqls);
+         connection.query(sqls, function(err,result,fields){
+         if(err) throw err;
+         for( var i = 0 ; i < result.length ; i++){
+            if(result[i].id==id) 
+            {notfound=1;break;}
+         }
+         if(notfound == 0){
+             var update_str = "UPDATE `uidd2018_groupI`.`achievement` SET `a1`="+ done+" WHERE id =\""+id+"\";";
+             connection.query(update_str);
+         }
+         else if(notfound == 1){
+             var insert_data = "INSERT INTO `uidd2018_groupI`. `record` (id,name,num,time) VALUES(\""+id+"\",\""+account+"\","+play+","+time+");";
+             connection.query(insert_data);
+         }
+         });
+      };  
+        var insert_data = "INSERT INTO `uidd2018_groupI`. `record` (id,name,num,time) VALUES(\""+id+"\",\""+account+"\","+play+","+time+");";
+        connection.query(insert_data);
+      })
+})
+
 app.post("/readBtn",urlencodedParser,function(req,res){
   connection.query("SELECT * FROM `uidd2018_groupI`.`roomList`" ,(err,rows,fields)=>{
     var str = "";

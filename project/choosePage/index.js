@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
     var track_num = 1,car_num = 1;
+    var id = window.location.href.split("?")[1];
 
     $('#transport').hide();
     $('#pointer').hide();
@@ -10,7 +11,7 @@ $(document).ready(function(){
         //$('#building').hide();
         $('#track').hide();
         window.sessionStorage.setItem("track_num",track_num);
-        document.location.href = "https://luffy.ee.ncku.edu.tw/~GaryChen2130/v4.final.html";
+        document.location.href = "https://luffy.ee.ncku.edu.tw/~GaryChen2130/v4.final.html?" + id;
     });
 
     $('#track1').click(function(){track_num = 1;});
