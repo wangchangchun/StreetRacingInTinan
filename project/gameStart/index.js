@@ -27,7 +27,7 @@ $(document).ready(function(){
     //document.location.href = "../scorePage/index.html?"+ID;
   })
   $("#start").click(function(){
-    document.location.href = "../racer/v4.final.html";
+    document.location.href = "../choosePage/index.html";
   })
   $("#return").click(function(){
     $("#start").show();

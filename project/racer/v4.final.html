@@ -135,7 +135,7 @@ $("#return").click(()=>{
 
     // for selecting track and car
     var track_num = window.sessionStorage.getItem("track_num");
-    var car_num = window.sessionStorage.getItem("car_num");
+    //var car_num = window.sessionStorage.getItem("car_num");
     if(track_num == 1)document.getElementById("place").setAttribute("src","./images/res/castle.png");
     else if(track_num == 2)document.getElementById("place").setAttribute("src","./images/res/hall.png");
     else if(track_num == 3)document.getElementById("place").setAttribute("src","./images/res/temple.png");
@@ -644,24 +644,24 @@ function resetRoad() {
 
 function resetSprites() {
   var n, i;
-  for(n = 1000;n < 3500;n += 10){
+  for(n = 0;n < 3500;n += 10){
 
     // Avoid sprites appearing on intersections
     if((Math.floor(n/rumbleLength)%100 == 0) || (Math.floor((n - 3)/rumbleLength)% 100 == 0) || (Math.floor((n - 6)/rumbleLength)%100 == 0))continue;
     
-    if(n < 1000)addSprite(n,SPRITES.TREE1,-1.2);
-    else if(n < 2000)addSprite(n,SPRITES.TREE2,-1.2);
-    else addSprite(n,SPRITES.TREE3,-1.2);
+    if(n < 1000){addSprite(n,SPRITES.TEST,-1.2);}
+    //else if(n < 2000)addSprite(n,SPRITES.TREE2,-1.2);
+    //else addSprite(n,SPRITES.TREE3,-1.2);
   
   }
-  for(n = 1005;n < 3500;n += 10){
+  for(n = 5;n < 3500;n += 10){
 
     // Avoid sprites appearing on intersections
     if((Math.floor(n/rumbleLength)%100 == 0) || (Math.floor((n - 3)/rumbleLength)%100 == 0) || (Math.floor((n - 6)/rumbleLength)%100) == 0)continue;
     
-    if(n < 1000)addSprite(n,SPRITES.TREE1,1.2);
-    else if(n < 2000)addSprite(n,SPRITES.TREE2,1.2);
-    else addSprite(n,SPRITES.TREE3,1.2);
+    if(n < 1000)addSprite(n,SPRITES.TEST,1.2);
+    //else if(n < 2000)addSprite(n,SPRITES.TREE2,1.2);
+    //else addSprite(n,SPRITES.TREE3,1.2);
   
   }
 

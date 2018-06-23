@@ -404,7 +404,7 @@ var SPRITES = {
   PLAYER_LEFT:            { x:  4790, y:  2180, w:  400, h:   200 },
   PLAYER_STRAIGHT:        { x: 5180, y:  2180, w:  400, h:   200 },
   PLAYER_RIGHT:           { x:  4790, y:  2400, w:  400, h:   200 },
-  TEST:{x:5180,y:2180,w:400,h:200}
+  TEST:{x:35,y:15,w:400,h:500}
 };
 
 SPRITES.SCALE = 0.3 * (1/SPRITES.PLAYER_STRAIGHT.w)*2 // the reference sprite width should be 1/3rd the (half-)roadWidth
