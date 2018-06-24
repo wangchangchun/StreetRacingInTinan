@@ -70,8 +70,12 @@ $(document).ready(function(){
       //document.location.href = "../scorePage/index.html?"+ID;
   })
   $("#start").click(function(){
-    document.location.href = "../racer/v4.final.html";
-
+//    document.location.href = "../racer/v4.final.html";
+document.location.href = "../choosePage/index.html";
+  })
+  $("#multi").click(function(){
+      document.location.href = "../multi.html";
+  
   })
   $("#return").click(function(){
 	  $("#score").hide();

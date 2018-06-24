@@ -23,7 +23,7 @@ httpsServer.listen(port,() => {
 })
 //*/
 const io = require('socket.io')(httpsServer);
-
+var rooms = require('./roomDefine');
 const config = {
   host:'localhost',
   user:'uidd2018_groupI',
@@ -229,10 +229,15 @@ io.on('connection', function(socket){
       var insert_data = "INSERT INTO `uidd2018_groupI`. `roomList` (id,num) VALUES(\""+roomId+"\","+memNum+");";
       connection.query(insert_data);
       socket.join(roomId);
-      io.sockets.in(roomId).emit('connectToRoom', roomId );
+      socket['room'] = data.id;
+      io.sockets.in(roomId).emit('connectToRoom',{id:data.id,roomId: roomId} );
+      socket.broadcast.in(socket['room']).emit('message', 'joined this room.');
+      //socket.emit('joinroomsuccess', {room:m})
+      
+
     });
   socket.on('search',function(data){
-    var checkNum = "SELECT * FROM `uidd2018_groupI`.`roomList` WHERE id =\""+data+"\";"
+    var checkNum = "SELECT * FROM `uidd2018_groupI`.`roomList` WHERE id =\""+data.search+"\";"
       connection.query(checkNum,(err,rows,field)=>{
         if(rows.length==0)
         {
@@ -241,21 +246,23 @@ io.on('connection', function(socket){
         else{
           var update_str = "UPDATE `uidd2018_groupI`.`roomList` SET `num`="+ (rows[0].num-1)+" WHERE id =\""+data+"\";";
           connection.query(update_str);
-          socket.join(data);
-          io.sockets.in(data).emit('connectToRoom', data);
+          socket.join(data.search);
+      socket['room'] = data.search;
+          io.sockets.in(data.search).emit('connectToRoom', {id:data.id,roomId:data.search});
+      socket.broadcast.in(socket['room']).emit('message', 'joined this room.');
 
         }
       });
 
   })
   socket.on('chat message', function(data){
-//        io.emit('chat message', msg);
-      console.log(data.roomId+" "+data.msg)
-      io.in(data.roomId).emit('chat message',data.msg)
+    //        io.emit('chat message', msg);
+    console.log(data.roomId+" "+data.msg)
+      io.sockets.in(data.roomId).emit('message',data.msg)
   });
   socket.on('auto', function(msg){
     var select = "SELECT * FROM `uidd2018_groupI`.`roomList`;"
-     // io.emit('chat message', msg);
+      // io.emit('chat message', msg);
       connection.query(select,(err,rows,field)=>{
         var update_str = "UPDATE `uidd2018_groupI`.`roomList` SET `num`="+ (rows[1].num-1)+" WHERE id =\""+rows[1].id+"\";";
         connection.query(update_str);

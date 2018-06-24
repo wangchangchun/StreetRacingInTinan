@@ -39,17 +39,22 @@ $(document).ready(function() {
   var socket = io();
   $("#createOk").click(()=>{
 //    alert($('select').val())
+      window.sessionStorage.setItem("roomId",ID);
       socket.emit('create',{id:ID,num:$('select').val()});
       $('#createModal').modal('hide');
+      $("#background").html("<img class='img-fuild' id='bg_pic' src='./src/bg.png'>")
+      $("#menu").hide();
   })
   $("#searchOk").click(()=>{
-    alert($('input').val())
-      socket.emit('search',$('input').val());
+    //alert($('input').val())
+      socket.emit('search',{id:ID,search:$('input').val()});
+       $("#background").html("<img class='img-fuild' id='bg_pic' src='./src/bg.png'>")
+      $("#menu").hide();
   })
   socket.on('connectToRoom',function(data) {
     //$("#roomList").append("<button class='ui purple button'>"+data+"</button>")
-   window.sessionStorage.setItem("roomId",data);
-      document.location.href = "./waitingRoom.html"
+      //document.location.href = "./waitingRoom.html"
+       $("#inRoom").append("<div class =\"memberBlock\"><img src = \"./src/member.png\"> <p>"+data.id+"</p></div>")
   })
   socket.on('disconnect',function(data){
           socket.emit('disconnect',ID)

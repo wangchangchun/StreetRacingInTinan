@@ -1,0 +1,68 @@
+
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+    <link rel = "stylesheet"type = "text/css" href="test.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+    <script src="./gameConnect.js"></script>
+  </head>
+  <body>
+    <div id = "background">
+      <img id = "bg_pic" src = "./src/background.png">
+      <img id = "menu_pic" src = "./src/BLUE BANNER.png">
+    </div>
+
+
+
+    <div id = "menu" class="ui vertical buttons">
+      <img id = "create" src = "./src/CREAT.png">Create room</button>
+      <img id = "search" src="./src/ADD.png">Search room</button>
+      <img id = "auto" src="./src/RANDOM.png">Auto</button>
+    </div>
+    
+    <div id = "roomList" class = "ui two column grid">
+    </div>
+    
+    <div id ="inRoom" class = "ui two column grid"></div>
+    <!--this is modal--> 
+    <div id = "createModal" class="ui modal">
+      <div class="header">Create Room</div>
+      <div class="content">
+        <form class="ui form">
+          <div class="field">
+            <select>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+          </form>
+      </div>
+      <div class="action">
+        <div id = "createOk" class="ui approve button">Create</div>
+        <div class="ui cancel button">Cancel</div>
+      </div>
+    </div>
+
+    <div id = "searchModal" class="ui modal">
+      <div class="header">Search Room</div>
+      <div class="content">
+        <form class="ui form">
+          <div class="field">
+            <label>Room Id:</label>
+            <input type="text" name="roomId" placeholder="Room Id">
+          </div>
+          </form>
+        </div>
+        
+        <div class="actions">
+          <div id ="searchOk" class="ui approve button">Search</div>
+          <div class="ui cancel button">Cancel</div>
+        </div>
+      </div>
+      <!---->
+
+    </body>
+  </html>
