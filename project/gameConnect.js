@@ -48,7 +48,8 @@ $(document).ready(function() {
   })
   socket.on('connectToRoom',function(data) {
     //$("#roomList").append("<button class='ui purple button'>"+data+"</button>")
-      document.location.href = "./racer/v4.final.html"
+   window.sessionStorage.setItem("roomId",data);
+      document.location.href = "./waitingRoom.html"
   })
   socket.on('disconnect',function(data){
           socket.emit('disconnect',ID)

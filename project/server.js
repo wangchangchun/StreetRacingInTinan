@@ -8,7 +8,7 @@ var ca_bundle = fs.readFileSync('./ssl/ca_bundle.crt','utf8');
 var credentials = {key: privateKey, cert: certificate};
 const express = require('express');
 const app = express();
-const port = 10085; // 請改成各組分配的port
+const port = 10088; // 請改成各組分配的port
 const bodyParser = require('body-parser');
 const urlencodedParser = bodyParser.urlencoded({extended:true});
 //const config = require('./config');
@@ -180,15 +180,15 @@ app.post("/readBtn",urlencodedParser,function(req,res){
  */
 io.on('connection', function(socket){
   console.log("connect")
-  socket.on('create',function(data){
-    console.log(data.id);
-    var roomId = data.id;
-    var memNum = data.num;
-    var insert_data = "INSERT INTO `uidd2018_groupI`. `roomList` (id,num) VALUES(\""+roomId+"\","+memNum+");";
-    connection.query(insert_data);
-    socket.join(roomId);
-    io.sockets.in(roomId).emit('connectToRoom', roomId );
-  });
+    socket.on('create',function(data){
+      console.log(data.id);
+      var roomId = data.id;
+      var memNum = data.num;
+      var insert_data = "INSERT INTO `uidd2018_groupI`. `roomList` (id,num) VALUES(\""+roomId+"\","+memNum+");";
+      connection.query(insert_data);
+      socket.join(roomId);
+      io.sockets.in(roomId).emit('connectToRoom', roomId );
+    });
   socket.on('search',function(data){
     var checkNum = "SELECT * FROM `uidd2018_groupI`.`roomList` WHERE id =\""+data+"\";"
       connection.query(checkNum,(err,rows,field)=>{
@@ -206,16 +206,21 @@ io.on('connection', function(socket){
       });
 
   })
+  socket.on('chat message', function(data){
+//        io.emit('chat message', msg);
+      console.log(data.roomId+" "+data.msg)
+      io.in(data.roomId).emit('chat message',data.msg)
+  });
   socket.on('auto', function(msg){
     var select = "SELECT * FROM `uidd2018_groupI`.`roomList`;"
-    //io.emit('chat message', msg);
+     // io.emit('chat message', msg);
       connection.query(select,(err,rows,field)=>{
-          var update_str = "UPDATE `uidd2018_groupI`.`roomList` SET `num`="+ (rows[1].num-1)+" WHERE id =\""+rows[1].id+"\";";
-          connection.query(update_str);
-          socket.join(rows[1].id);
-          io.sockets.in(rows[1].id).emit('connectToRoom', rows[1].id);
-      
-      
+        var update_str = "UPDATE `uidd2018_groupI`.`roomList` SET `num`="+ (rows[1].num-1)+" WHERE id =\""+rows[1].id+"\";";
+        connection.query(update_str);
+        socket.join(rows[1].id);
+        io.sockets.in(rows[1].id).emit('connectToRoom', rows[1].id);
+
+
       })
   });
   //socket.on('start',gameStart);

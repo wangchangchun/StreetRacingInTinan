@@ -19,7 +19,7 @@
       $(function () {
         var socket = io();
         $('form').submit(function(){
-          socket.emit('chat message', $('#m').val());
+          socket.emit('chat message',{ msg:$('#m').val(),roomId: window.sessionStorage.getItem("roomId")});
           $('#m').val('');
           return false;
         });
