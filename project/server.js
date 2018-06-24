@@ -226,30 +226,30 @@ io.on('connection', function(socket){
       console.log(data.id);
       var roomId = data.id;
       var memNum = data.num;
-      var insert_data = "INSERT INTO `uidd2018_groupI`. `roomList` (id,num) VALUES(\""+roomId+"\","+memNum+");";
+      var insert_data = "INSERT INTO `uidd2018_groupI`. `roomList` (id,allnum,num) VALUES(\""+roomId+"\","+memNum+",1);";
       connection.query(insert_data);
       socket.join(roomId);
-      socket['room'] = data.id;
       io.sockets.in(roomId).emit('connectToRoom',{id:data.id,roomId: roomId} );
-      socket.broadcast.in(socket['room']).emit('message', 'joined this room.');
-      //socket.emit('joinroomsuccess', {room:m})
+      //socket.broadcast.in(roomId).emit('message', 'joined this room.');
       
 
     });
   socket.on('search',function(data){
     var checkNum = "SELECT * FROM `uidd2018_groupI`.`roomList` WHERE id =\""+data.search+"\";"
+      console.log(checkNum);
       connection.query(checkNum,(err,rows,field)=>{
-        if(rows.length==0)
+        if(rows.length==0&& rows[0].allnum>rows[0].num)
         {
 
         }
         else{
-          var update_str = "UPDATE `uidd2018_groupI`.`roomList` SET `num`="+ (rows[0].num-1)+" WHERE id =\""+data+"\";";
+          var update_str = "UPDATE `uidd2018_groupI`.`roomList` SET `num`="+ (rows[0].num+1)+", `mem"+(rows[0].num)+"`=\""+data.id+"\" WHERE id =\""+data.search+"\";";
           connection.query(update_str);
+          console.log("search succeed join"+data.search)
           socket.join(data.search);
-      socket['room'] = data.search;
+      //socket['room'] = data.search;
           io.sockets.in(data.search).emit('connectToRoom', {id:data.id,roomId:data.search});
-      socket.broadcast.in(socket['room']).emit('message', 'joined this room.');
+      //socket.broadcast.in(socket['room']).emit('message', 'joined this room.');
 
         }
       });
@@ -258,7 +258,8 @@ io.on('connection', function(socket){
   socket.on('chat message', function(data){
     //        io.emit('chat message', msg);
     console.log(data.roomId+" "+data.msg)
-      io.sockets.in(data.roomId).emit('message',data.msg)
+      socket.broadcast.in(data.roomId).emit('message', data.msg);
+      //io.sockets.in(data.roomId).emit('message',data.msg)
   });
   socket.on('auto', function(msg){
     var select = "SELECT * FROM `uidd2018_groupI`.`roomList`;"

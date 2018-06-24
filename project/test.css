@@ -25,13 +25,13 @@
 #search{
     position:absolute;
     width:20vw;
-    top:40%;
+    top:45%;
     left:10%;
 }
 #auto{
     position:absolute;
     width:20vw;
-    top:45%;
+    top:55%;
     left:10%;
 }
 #inRoom{
@@ -46,17 +46,28 @@
     left: 20%;
     z-index: 10;
     font-size:36;
-}
-#inRoom img{
+  }
+  #inRoom img{
     position:absolute;
     z-index:10;
     width:20vw;
-}
-.memberBlock{
+  }
+  .memberBlock{
     position:relative;
     z-index:10;
     width:20vw;
     padding-top:5%;
     margin-top:10%;
     margin-left:10%;
-}
+  }
+/*
+ * { margin: 0; padding: 0; box-sizing: border-box; }
+body { font: 13px Helvetica, Arial; }
+*/
+  #chatBoard{z-index:12; padding: 3px; position: fixed; bottom: 0; width: 100%;}
+
+  #m { border: 0; padding: 10px; width: 85%; margin-right: .5%; }
+  #sendMsg { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+  #messages { list-style-type: none; margin: 0; padding: 0; }
+  #messages li {background:#aff; padding: 5px 10px; }
+  #messages li:nth-child(odd) { background: #eee; }

@@ -1,5 +1,6 @@
 $(document).ready(function() {
   const ID = window.sessionStorage.getItem("playId");
+  $("#chatBoard").hide();
   $.ajax({
     url:"./readBtn",
     method:"POST",
@@ -39,19 +40,21 @@ $(document).ready(function() {
   var socket = io();
   $("#createOk").click(()=>{
 //    alert($('select').val())
-      window.sessionStorage.setItem("roomId",ID);
       socket.emit('create',{id:ID,num:$('select').val()});
       $('#createModal').modal('hide');
       $("#background").html("<img class='img-fuild' id='bg_pic' src='./src/bg.png'>")
       $("#menu").hide();
+      $("#chatBoard").show();
   })
   $("#searchOk").click(()=>{
     //alert($('input').val())
-      socket.emit('search',{id:ID,search:$('input').val()});
+      socket.emit('search',{id:ID,search:$('#searchInput').val()});
        $("#background").html("<img class='img-fuild' id='bg_pic' src='./src/bg.png'>")
       $("#menu").hide();
+      $("#chatBoard").show();
   })
   socket.on('connectToRoom',function(data) {
+      window.sessionStorage.setItem("roomId",data.roomId);
     //$("#roomList").append("<button class='ui purple button'>"+data+"</button>")
       //document.location.href = "./waitingRoom.html"
        $("#inRoom").append("<div class =\"memberBlock\"><img src = \"./src/member.png\"> <p>"+data.id+"</p></div>")
@@ -60,12 +63,20 @@ $(document).ready(function() {
           socket.emit('disconnect',ID)
   
   })
+  $("#sendMsg").click(()=>{
+    //socket.emit('message',$('#m').val())
+    socket.emit('chat message',{ msg:$('#m').val(),roomId: window.sessionStorage.getItem("roomId")});
+    $('#m').val('');
+  })
+  socket.on('message', function(msg){
+    $('#messages').append($('<li>').text(msg));
+  });
   $("#auto").click(()=>{
-      socket.emit('auto',ID)
+    socket.emit('auto',ID)
   })
   $('.dropdown').dropdown();
   $('.cancel').click(()=>{
-      $('.modal').modal('hide');
+    $('.modal').modal('hide');
   })
   $('#searchModal').modal('attach events', '#search', 'show');
   $('#createModal').modal('attach events', '#create', 'show');
