@@ -71,6 +71,7 @@ $(document).ready(function(){
   })
   $("#start").click(function(){
     document.location.href = "../racer/v4.final.html";
+
   })
   $("#return").click(function(){
 	  $("#score").hide();
