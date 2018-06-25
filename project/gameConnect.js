@@ -52,12 +52,24 @@ $(document).ready(function() {
        $("#background").html("<img class='img-fuild' id='bg_pic' src='./src/bg.png'>")
       $("#menu").hide();
       $("#chatBoard").show();
+  $.ajax({
+    url:"./roomData",
+    method:"POST",
+    type:"post",
+    data:{
+      roomId:$('#searchInput').val()
+    },
+    success:(res)=>{
+          $("#inRoom").append(res);
+            
+    }
+  })
   })
   socket.on('connectToRoom',function(data) {
       window.sessionStorage.setItem("roomId",data.roomId);
     //$("#roomList").append("<button class='ui purple button'>"+data+"</button>")
       //document.location.href = "./waitingRoom.html"
-       $("#inRoom").append("<div class =\"memberBlock\"><img src = \"./src/member.png\"> <p>"+data.id+"</p></div>")
+      $("#inRoom").append("<div class =\"memberBlock\"><img src = \"./src/member.png\"> <p>"+data.id+"</p></div>")
   })
   socket.on('disconnect',function(data){
           socket.emit('disconnect',ID)
@@ -66,6 +78,7 @@ $(document).ready(function() {
   $("#sendMsg").click(()=>{
     //socket.emit('message',$('#m').val())
     socket.emit('chat message',{ msg:$('#m').val(),roomId: window.sessionStorage.getItem("roomId")});
+    $("#messages").append($('<li>').text($('#m').val()));
     $('#m').val('');
   })
   socket.on('message', function(msg){

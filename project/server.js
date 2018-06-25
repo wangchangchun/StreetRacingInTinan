@@ -215,6 +215,29 @@ app.post("/readBtn",urlencodedParser,function(req,res){
     res.send(str)
   })
 })
+app.post("/roomData",urlencodedParser,function(req,res){
+  var roomId = req.param('roomId');
+  console.log("roomId = "+roomId)
+    var checkNum = "SELECT * FROM `uidd2018_groupI`.`roomList` WHERE id =\""+roomId+"\";"
+    //   console.log(checkNum);
+    connection.query(checkNum,(err,rows,field)=>{
+      console.log(rows.length)
+        var str="";
+      for (var i=1;i<=rows[0].num;i++)
+      {
+        if(i==1)
+          str = str+"<div class =\"memberBlock\"><img src = \"./src/member.png\"> <p>"+rows[0].id+"</p></div>";
+        if(i==2)
+          str = str+"<div class =\"memberBlock\"><img src = \"./src/member.png\"> <p>"+rows[0].mem1+"</p></div>";
+        if(i==3)
+          str = str+"<div class =\"memberBlock\"><img src = \"./src/member.png\"> <p>"+rows[0].mem2+"</p></div>";
+        if(i==4)
+          str = str+"<div class =\"memberBlock\"><img src = \"./src/member.png\"> <p>"+rows[0].mem3+"</p></div>";
+      }
+      res.send(str)
+    })
+
+})
 /***
  *  multiplayer connection setting
  *  don't change!!!!!!!!!
@@ -223,7 +246,7 @@ app.post("/readBtn",urlencodedParser,function(req,res){
 io.on('connection', function(socket){
   console.log("connect")
     socket.on('create',function(data){
-      console.log(data.id);
+      // console.log(data.id);
       var roomId = data.id;
       var memNum = data.num;
       var insert_data = "INSERT INTO `uidd2018_groupI`. `roomList` (id,allnum,num) VALUES(\""+roomId+"\","+memNum+",1);";
@@ -231,14 +254,14 @@ io.on('connection', function(socket){
       socket.join(roomId);
       io.sockets.in(roomId).emit('connectToRoom',{id:data.id,roomId: roomId} );
       //socket.broadcast.in(roomId).emit('message', 'joined this room.');
-      
+
 
     });
   socket.on('search',function(data){
     var checkNum = "SELECT * FROM `uidd2018_groupI`.`roomList` WHERE id =\""+data.search+"\";"
-      console.log(checkNum);
+      // console.log(checkNum);
       connection.query(checkNum,(err,rows,field)=>{
-        if(rows.length==0&& rows[0].allnum>rows[0].num)
+        if((rows.length==0)||( rows[0].allnum<=rows[0].num))
         {
 
         }
@@ -246,10 +269,8 @@ io.on('connection', function(socket){
           var update_str = "UPDATE `uidd2018_groupI`.`roomList` SET `num`="+ (rows[0].num+1)+", `mem"+(rows[0].num)+"`=\""+data.id+"\" WHERE id =\""+data.search+"\";";
           connection.query(update_str);
           console.log("search succeed join"+data.search)
-          socket.join(data.search);
-      //socket['room'] = data.search;
-          io.sockets.in(data.search).emit('connectToRoom', {id:data.id,roomId:data.search});
-      //socket.broadcast.in(socket['room']).emit('message', 'joined this room.');
+            socket.join(data.search);
+          socket.broadcast.in(data.search).emit('connectToRoom', {id:data.id,roomId:data.search});
 
         }
       });
@@ -259,7 +280,7 @@ io.on('connection', function(socket){
     //        io.emit('chat message', msg);
     console.log(data.roomId+" "+data.msg)
       socket.broadcast.in(data.roomId).emit('message', data.msg);
-      //io.sockets.in(data.roomId).emit('message',data.msg)
+    //io.sockets.in(data.roomId).emit('message',data.msg)
   });
   socket.on('auto', function(msg){
     var select = "SELECT * FROM `uidd2018_groupI`.`roomList`;"
