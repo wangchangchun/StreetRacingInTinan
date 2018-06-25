@@ -67,7 +67,7 @@ app.post("/public/sign_up_data",urlencodedParser,function(req,res){
   }
   else{	
     var sqls = "SELECT * FROM `mytable` WHERE id = '"+id+"'";
-    console.log(sqls);
+  //  console.log(sqls);
     connection.query(sqls, function(err,result,fields){
       if(err) throw err;
       for( var i = 0 ; i < result.length ; i++){
@@ -75,10 +75,10 @@ app.post("/public/sign_up_data",urlencodedParser,function(req,res){
       }
       if(notfound == 0){
         var sqli = "INSERT INTO `mytable` ( name , id , pw,play) VALUES ('"+name+"','"+id+"','"+pw+"',0)";
-        console.log(sqli);
+     //   console.log(sqli);
         connection.query(sqli, function(err,result){
           if(err) throw err;
-          console.log("signup");
+     //     console.log("signup");
           res.send('Sign up succeed');
         });
       }
@@ -94,7 +94,7 @@ app.post("/public/login_data",urlencodedParser,function(req, res) {
   }
   else{
     var sqls = "SELECT * FROM `mytable` WHERE id = '"+id+"'";
-    console.log(sqls);
+   // console.log(sqls);
     connection.query(sqls, function(err,result,fields){
       if(err) throw err;
       for( var i = 0 ; i < result.length ; i++){
@@ -184,7 +184,7 @@ app.post("/racer/saveAchieve",urlencodedParser,function(req,res){
       if(err) console.log("read err");
       else{
          var sqls = "SELECT * FROM `achievement` WHERE id = '"+id+"'";
-         console.log(sqls);
+  //       console.log(sqls);
          connection.query(sqls, function(err,result,fields){
          if(err) throw err;
          for( var i = 0 ; i < result.length ; i++){
@@ -217,13 +217,13 @@ app.post("/readBtn",urlencodedParser,function(req,res){
 })
 app.post("/roomData",urlencodedParser,function(req,res){
   var roomId = req.param('roomId');
-  console.log("roomId = "+roomId)
+//  console.log("roomId = "+roomId)
     var checkNum = "SELECT * FROM `uidd2018_groupI`.`roomList` WHERE id =\""+roomId+"\";"
     //   console.log(checkNum);
     connection.query(checkNum,(err,rows,field)=>{
-      console.log(rows.length)
+     // console.log(rows.length)
         var str="";
-      for (var i=1;i<=rows[0].num;i++)
+      for (var i=1;i<rows[0].num;i++)
       {
         if(i==1)
           str = str+"<div class =\"memberBlock\"><img src = \"./src/member.png\"> <p>"+rows[0].id+"</p></div>";
@@ -249,7 +249,7 @@ io.on('connection', function(socket){
       // console.log(data.id);
       var roomId = data.id;
       var memNum = data.num;
-      var insert_data = "INSERT INTO `uidd2018_groupI`. `roomList` (id,allnum,num) VALUES(\""+roomId+"\","+memNum+",1);";
+      var insert_data = "INSERT INTO `uidd2018_groupI`. `roomList` (id,map,allnum,num) VALUES(\""+roomId+"\","+data.map+","+memNum+",1);";
       connection.query(insert_data);
       socket.join(roomId);
       io.sockets.in(roomId).emit('connectToRoom',{id:data.id,roomId: roomId} );
@@ -268,9 +268,9 @@ io.on('connection', function(socket){
         else{
           var update_str = "UPDATE `uidd2018_groupI`.`roomList` SET `num`="+ (rows[0].num+1)+", `mem"+(rows[0].num)+"`=\""+data.id+"\" WHERE id =\""+data.search+"\";";
           connection.query(update_str);
-          console.log("search succeed join"+data.search)
+     //     console.log("search succeed join"+data.search)
             socket.join(data.search);
-          socket.broadcast.in(data.search).emit('connectToRoom', {id:data.id,roomId:data.search});
+          io.sockets.in(data.search).emit('connectToRoom', {id:data.id,roomId:data.search});
 
         }
       });
@@ -278,8 +278,8 @@ io.on('connection', function(socket){
   })
   socket.on('chat message', function(data){
     //        io.emit('chat message', msg);
-    console.log(data.roomId+" "+data.msg)
-      socket.broadcast.in(data.roomId).emit('message', data.msg);
+   // console.log(data.roomId+" "+data.msg)
+      io.sockets.in(data.roomId).emit('message', data.msg);
     //io.sockets.in(data.roomId).emit('message',data.msg)
   });
   socket.on('auto', function(msg){
@@ -294,7 +294,16 @@ io.on('connection', function(socket){
 
       })
   });
-  //socket.on('start',gameStart);
+  socket.on('startGame',function(data){
+    //console.log("room "+data+" start");
+      io.sockets.in(data).emit('start',data);
+  });
+  socket.on('position',function(data){
+    //console.log("id "+data.id+" roomId "+data.roomId+" position "+data.position)
+      socket.broadcast.in(data.roomId).emit('rivalPosition',{id:data.id,position:data.position})
+      //socket.broadcast.in(roomId).emit('message', 'joined this room.');
+  
+  })
   socket.on('disconnect',function(roomId){
     console.log("disconnect")
       var delete_data = "DELETE FROM `uidd2018_groupI`.`roomList` WHERE id=\""+roomId+"\";"

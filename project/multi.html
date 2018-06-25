@@ -6,7 +6,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
-    <script src="./gameConnect.js"></script>
+    <script src="./game.js"></script>
   </head>
   <body>
     <div id = "background">
@@ -17,28 +17,33 @@
 
 
     <div id = "menu" class="ui vertical buttons">
-      <img id = "create" src = "./src/CREAT.png">Create room</button>
-      <img id = "search" src="./src/ADD.png">Search room</button>
-      <img id = "auto" src="./src/RANDOM.png">Auto</button>
+      <img id = "create" src = "./src/CREAT.png">Create room</img>
+      <img id = "search" src="./src/ADD.png">Search room</img>
+      <img id = "auto" src="./src/RANDOM.png">Auto</img>
     </div>
-    
-    <div id = "roomList" class = "ui two column grid">
-    </div>
-    
-    <div id ="inRoom" class = "ui two column grid"></div>
     <!--this is modal--> 
     <div id = "createModal" class="ui modal">
       <div class="header">Create Room</div>
       <div class="content">
         <form class="ui form">
           <div class="field">
-            <select>
+            <label>Member Number :</label>
+            <select id = "numSelect">
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
             </select>
           </div>
-          </form>
+          <div class = "field">
+            <label>Map :</label>
+            <select id = "mapSelect">
+              <option value="1">Zeelandia安平追想曲</option>
+              <option value="2">文學秘境~從台灣府到州廳</option>
+              <option value="3">五條港的水神與商郊</option>
+              <option value="4">清代府城官道</option>
+            </select>
+          </div>
+        </form>
       </div>
       <div class="action">
         <div id = "createOk" class="ui approve button">Create</div>
@@ -54,24 +59,80 @@
             <label>Room Id:</label>
             <input id= "searchInput" type="text" name="roomId" placeholder="Room Id">
           </div>
-          </form>
-        </div>
-        
-        <div class="actions">
-          <div id ="searchOk" class="ui approve button">Search</div>
-          <div class="ui cancel button">Cancel</div>
-        </div>
+        </form>
       </div>
-      <!---->
+
+      <div class="actions">
+        <div id ="searchOk" class="ui approve button">Search</div>
+        <div class="ui cancel button">Cancel</div>
+      </div>
+    </div>
+    <!---->
+    <!--waiting Room-->
+    <div id = "waitingRoom">
+      <div id = "roomList" class = "ui two column grid"></div>
+
+      <div id ="inRoom" class = "ui two column grid"></div>
+      <img id = "multiStart" src = "./src/START.png">
       <!--chat board-->
       <div id = "chatBoard">
         <ul id="messages"></ul>
         <form class="ui form">
           <div class="field">
             <input id ="m" type="text" name="roomId">
-          <div id ="sendMsg" class="ui approve button">Send</div>
+            <div id ="sendMsg" class="ui approve button">Send</div>
           </div>
         </form>
       </div>
-    </body>
-  </html>
+    </div>
+    <!--Game-->
+    <div id = "game">
+      <link href="./racer/common.css" rel="stylesheet" type="text/css" />
+      <div id="racer">
+        <div id="hud">
+          <span id="speed"            class="hud"><span id="speed_value" class="value">0</span> mph</span>
+          <span id="current_lap_time" class="hud">Time: <span id="current_lap_time_value" class="value">0.0</span></span> 
+          <span id="last_lap_time"    class="hud">Last Lap: <span id="last_lap_time_value" class="value">0.0</span></span>
+          <span id="fast_lap_time"    class="hud">Fastest Lap: <span id="fast_lap_time_value" class="value">0.0</span></span>
+          <span id="position"         class="hud">position: <span id="position_value" class="value">0</span></span>
+          <span id="rival"            class="hud">Rival: <span id = "rival_value" class="value">0</span></span>
+        </div>
+        <canvas id="canvas">
+          Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element
+        </canvas>
+        Loading...
+      </div>
+
+      <!-----------------virtual button---------------------->
+      <button type="button" id="up" onmousedown="keyFaster=true" onmouseup="keyFaster=false" onmouseout="keyFaster=false" ontouchstart="keyFaster=true" ontouchend="keyFaster=false"></button>
+      <button type="button" id="down" onmousedown="keySlower=true" onmouseup="keySlower=false" onmouseout="keySlower=false" ontouchstart="keySlower=true" ontouchend="keySlower=false"></button>
+      <button type="button" id="left" onmousedown="keyLeft=true" onmouseup="keyLeft=false" onmouseout="keyLeft=false" ontouchstart="keyLeft=true" ontouchend="keyLeft=false"></button>
+      <button type="button" id="right" onmousedown="keyRight=true" onmouseup="keyRight=false" onmouseout="keyRight=false" ontouchstart="keyRight=true" ontouchend="keyRight=false"></button>
+      <!-----------------virtual button---------------------->
+
+      <div id = "destination">
+        <img id = "place" src = "./images/res/castle.png"/>
+      </div>
+
+      <div id = "introduction">
+        <p>這是就是接官亭啊，<br>
+          看起來還真是氣派的牌坊呢…<br>
+          耶！？ 那棟是風神廟嗎！？<br>
+          據說這裡是內地來的高層會來的地方，<br>
+          過去在水仙宮一帶的街市聽過駐紮在那裏的班兵說過，<br>
+          這裡是迎接內地來的官老爺進去府城的第一站，<br>
+          內地的官老爺來這裡通常都會發布從京城來的聖旨給知府大人，<br>
+          接著會從這裡出發進入大西門到府城巡查，<br>
+          另外這個地方也是台灣府會定期維護祭拜的廟宇，<br>
+          同時也作為給官員辦公休息的公館，<br>
+          唉…仔細想想這五條港還真是繁榮的地方，<br>
+          一不小心走著走著就走到這裡了，<br>
+          好…就先在這裡附近逛逛吧。</p>
+        <img id = "return" src = "./gameStart/src/RETURN.png">
+      </div>
+      <script src="./racer/stats.js"></script>
+      <script src="./racer/common.js"></script>
+
+    </div>
+  </body>
+</html>
