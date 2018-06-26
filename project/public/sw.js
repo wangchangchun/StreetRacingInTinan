@@ -1,5 +1,5 @@
 const cacheFile = [
-  './BLUE.png,
+  './BLUE.png',
   './LOGIN BANNER.png',
   './FINISH BANNER.png',
   './PASSWORD.png',
