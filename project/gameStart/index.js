@@ -123,39 +123,48 @@ $(document).ready(function(){
     },500)
   },2200);
   $("#ach").click(function(){
-    $("#score").show();
-    $("#startPage").hide();
-    $("#car").hide();
-    $("#building").hide();
-    $("#blue").hide();
-    var str = " ID = \""+ID+"\" AND";
-    $.ajax({
-      method: "post",
-      url: "./readRecord",
-      data: {
-        mode:str,
-        ID:ID,
-        map:1
-      },
-      success: function(data) {
-        $("#record1").html(data)
-      }
-    })
-    $("#return").show();
-    $("#record").show();
-    $("#achPage").show();
-    //document.location.href = "../scorePage/index.html?"+ID;
+	$("#ach").css("transform","scale(0.5)");
+	setTimeout(function(){	
+		$("#score").show();
+		$("#startPage").hide();
+		$("#car").hide();
+		$("#building").hide();
+		$("#blue").hide();
+		var str = " ID = \""+ID+"\" AND";
+		$.ajax({
+		  method: "post",
+		  url: "./readRecord",
+		  data: {
+			mode:str,
+			ID:ID,
+			map:1
+		  },
+		  success: function(data) {
+			$("#record1").html(data)
+		  }
+		})
+		$("#return").show();
+		$("#record").show();
+		$("#achPage").show();
+		//document.location.href = "../scorePage/index.html?"+ID;
+	},2000);
   })
   $("#start").click(function(){
     //    document.location.href = "../racer/v4.final.html";
-    document.location.href = "../choosePage/index.html";
+	$("#start").css("transform","scale(0.5)");
+	setTimeout(function(){	
+		document.location.href = "../choosePage/index.html";
+	},2000);	
   })
   $("#multi").click(function(){
-    document.location.href = "../multi.html";
-
+	$("#multi").css("transform","scale(0.5)");
+	setTimeout(function(){	
+		document.location.href = "../multi.html";
+	},2000);
   })
 
   $("#return").click(function(){
+    $("#ach").css("transform","scale(1)");
     $("#score").hide();
     $("#startPage").show();
     $("#car").show();
