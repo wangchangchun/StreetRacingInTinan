@@ -61,6 +61,7 @@
   </audio>
   <span id="mute"></span>
   -->
+  <embed src="music/racer.mp3" autostart="true" loop="true" hidden="true" >
 
   <script src="stats.js"></script>
   <script src="common.js"></script>
@@ -279,6 +280,7 @@ $("#return").click(()=>{
             url: "./saveRecord",
             data: {
               ID:id ,
+              map:track_num,
               THISTIME: currentLapTime
             },
             success: function(data) {

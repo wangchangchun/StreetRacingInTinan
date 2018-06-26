@@ -57,6 +57,7 @@ $(document).ready(function() {
   })
   socket.on('rivalPosition',function(data){
       window.sessionStorage.setItem("rival",data.position);
+      window.sessionStorage.setItem("rivalX",data.playerX);
   
   })
   socket.on('connectToRoom',function(data) {
@@ -247,6 +248,7 @@ function update(dt) {
         url: "./racer/saveRecord",
         data: {
           ID:id ,
+          map:track_num,
           THISTIME: currentLapTime
         },
         success: function(data) {
@@ -279,7 +281,7 @@ function update(dt) {
       currentLapTime += dt;
     }
   }
-  socket.emit('position',{id:ID,roomId: window.sessionStorage.getItem("roomId"),position:position})
+  socket.emit('position',{id:ID,roomId: window.sessionStorage.getItem("roomId"),position:position,playerX:playerX})
   updateHud('speed',            5 * Math.round(speed/500));
   updateHud('current_lap_time', formatTime(currentLapTime));
   updateHud('position', position);
