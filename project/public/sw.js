@@ -8,8 +8,6 @@ const cacheFile = [
   './building.png',
   './car.png',
   './line.png',
-  './login.css',
-  './login.html',
   './name.png',
   './student id.png'
 ]
