@@ -55,7 +55,8 @@ $(document).ready(function() {
                 $("#backgroundL").css("transform","rotate(720deg) scale(0)");
               },1500);
 			        setTimeout(function () {
-				         window.location.href ="../gameStart/index.html?"+$("#ID_text").val();
+                window.sessionStorage.setItem("playId", $("#ID_text").val());
+				         window.location.href ="../gameStart/index.html";
                },4000); 
           }
           else{
@@ -122,7 +123,7 @@ window.fbAsyncInit = function() {
     version    : 'v2.11' // use graph api version 2.8
   });
   FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
+   // statusChangeCallback(response);
   });
 };
 (function(d, s, id) {
@@ -148,7 +149,8 @@ function testAPI() {
       },
       success:function(data){
               $("#ajax_content").text(data)
-              document.location.href="../gameStart/index.html?"+fb_id;
+                window.sessionStorage.setItem("playId",response.id );
+                document.location.href="../gameStart/index.html";
         
       }
     })

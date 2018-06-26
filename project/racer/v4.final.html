@@ -86,9 +86,9 @@
 	}
 	////////////////////////////API///////////////////////////////////
 //=======
-var id = window.location.href.split("?")[1];
+var id = window.sessionStorage.getItem("playId");
 $("#return").click(()=>{
-    document.location.href= "../gameStart/index.html?"+id;
+    document.location.href= "../gameStart/index.html";
 })
     var fps            = 60;                      // how many 'update' frames per second
     var step           = 1/fps;                   // how long is each frame (in seconds)
@@ -150,7 +150,7 @@ $("#return").click(()=>{
     var keyFaster      = false;
     var keySlower      = false;
 
-    //var id = window.location.href.split("?")[1];
+    //var id = window.sessionStorage.getItem("playId");
     var gameover       = false;
     var recordSend     = false;
     var hud = {

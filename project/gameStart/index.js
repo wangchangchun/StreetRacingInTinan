@@ -1,7 +1,7 @@
 
 $(document).ready(function(){
   var url = window.location.href;
-  var ID = url.split("?")[1]
+  var ID = window.sessionStorage.getItem("playId");
   $("#return").hide();
   $("#score").hide();
  //$("#share").hide(); 
@@ -70,10 +70,12 @@ $(document).ready(function(){
       //document.location.href = "../scorePage/index.html?"+ID;
   })
   $("#start").click(function(){
-
-    document.location.href = "../choosePage/index.html?"+ID;
-    //document.location.href = "../racer/v4.final.html?"+ID;
-
+//    document.location.href = "../racer/v4.final.html";
+document.location.href = "../choosePage/index.html";
+  })
+  $("#multi").click(function(){
+      document.location.href = "../multi.html";
+  
   })
   $("#return").click(function(){
 	  $("#score").hide();

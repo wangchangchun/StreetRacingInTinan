@@ -17,13 +17,13 @@
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
       $(function () {
-        var socket = io();
+        var socket = io().connect();
         $('form').submit(function(){
-          socket.emit('chat message', $('#m').val());
+          socket.emit('chat message',{ msg:$('#m').val(),roomId: window.sessionStorage.getItem("roomId")});
           $('#m').val('');
           return false;
         });
-        socket.on('chat message', function(msg){
+        socket.on('message', function(msg){
           $('#messages').append($('<li>').text(msg));
         });
       });
