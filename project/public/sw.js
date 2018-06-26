@@ -1,15 +1,20 @@
 const cacheFile = [
-  './resources/css/style.css',
-  './resources/img/IMG_0720-2.jpg',
-  './resources/img/IMG_0722-2.jpg',
-  './resources/img/IMG_0724-2.jpg',
-  './resources/img/IMG_0726-2.jpg',
-  './resources/img/IMG_0727-2.jpg',
-  './resources/img/IMG_0729-2.jpg',
-  './resources/js/script.js'
+  './BLUE.png,
+  './LOGIN BANNER.png',
+  './FINISH BANNER.png',
+  './PASSWORD.png',
+  './SIGNUP BANNER.png',
+  './TSR.png',
+  './building.png',
+  './car.png',
+  './line.png',
+  './login.css',
+  './login.html',
+  './name.png',
+  './student id.png'
 ]
 
-const cacheKey = 'ncku_class_v14'
+const cacheKey = 'TSR_v1'
 
 // install
 self.addEventListener('install', event => {
