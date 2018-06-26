@@ -299,7 +299,7 @@ $("#return").click(()=>{
             if(collide_pos != position){
               ++collide;
               collide_pos = position;
-              //console.log(collide);
+              console.log(collide);
             }
             break;
           }
@@ -356,6 +356,19 @@ $("#return").click(()=>{
             }
         })
         recordSend=true;
+        console.log(collide)
+        $.ajax({
+            method:"post",
+            url:"./saveCollide",
+            data:{
+                id :id,
+                collide:collide
+            },
+            success:function(){
+            
+            }
+        
+        })
         }
         if(speed >= 50)speed = speed - 50;
         else speed = 0;
