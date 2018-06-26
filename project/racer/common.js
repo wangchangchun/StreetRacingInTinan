@@ -445,6 +445,6 @@ SPRITES.CARS       = [SPRITES.CAR01, SPRITES.CAR02, SPRITES.CAR03, SPRITES.CAR04
 
 $(document).ready(function(){
 	setTimeout(function(){
-		$("#bg").css("opacity","0");
+		$("#bg").css("z-index","-1");
 	},3000)
 })
