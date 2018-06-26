@@ -125,9 +125,13 @@ app.post("/public/fb_read",urlencodedParser,function(req, res) {
 })
 app.post("/gameStart/readRecord",urlencodedParser,function(req,res){
   var id = req.param('ID');
-  //console.log(id);
+  var map = req.param('map');
+  var mode = req.param('mode');
+  console.log("mode:"+mode);
   var str = "";
-  connection.query("SELECT * FROM `uidd2018_groupI`.`record` WHERE id = \""+id+"\";",(err,rows,fields)=>{ 
+  var select = "SELECT * FROM `uidd2018_groupI`.`record` WHERE "+mode+" map = "+map+" ORDER BY time ASC;"
+    console.log(select)
+  connection.query(select,(err,rows,fields)=>{ 
     for(var i=0;i<rows.length;i++)
     {
       if(rows[i].time>60)
@@ -277,10 +281,7 @@ io.on('connection', function(socket){
 
   })
   socket.on('chat message', function(data){
-    //        io.emit('chat message', msg);
-   // console.log(data.roomId+" "+data.msg)
       io.sockets.in(data.roomId).emit('message', data.msg);
-    //io.sockets.in(data.roomId).emit('message',data.msg)
   });
   socket.on('auto', function(msg){
     var select = "SELECT * FROM `uidd2018_groupI`.`roomList`;"
