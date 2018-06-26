@@ -310,17 +310,17 @@ var Render = {
 
   //---------------------------------------------------------------------------
 
-  player: function(ctx, width, height, resolution, roadWidth, sprites, speedPercent, scale, destX, destY, steer, updown) {
+  player: function(ctx, width, height, resolution, roadWidth, sprites, sprite, speedPercent, scale, destX, destY, steer, updown) {
 
     var bounce = (1.5 * Math.random() * speedPercent * resolution) * Util.randomChoice([-1,1]);
-    var sprite;
+    /*var sprite;
     if (steer < 0)
       sprite = (updown > 0) ? SPRITES.PLAYER_UPHILL_LEFT : SPRITES.PLAYER_LEFT;
     else if (steer > 0)
       sprite = (updown > 0) ? SPRITES.PLAYER_UPHILL_RIGHT : SPRITES.PLAYER_RIGHT;
     else
       sprite = (updown > 0) ? SPRITES.PLAYER_UPHILL_STRAIGHT : SPRITES.PLAYER_STRAIGHT;
-
+*/
     Render.sprite(ctx, width/4, height/4, resolution, roadWidth, sprites, sprite, scale, destX, destY + bounce, -0.5, -1);
   },
 
@@ -365,49 +365,55 @@ var COLORS = {
   LIGHT:  { road: '#696969', grass: '#663300', rumble: '#696969', lane: '#CCCCCC'},
   DARK:   { road: '#696969', grass: '#663300', rumble: '#696969'},
   START:  { road: 'white',   grass: 'white', rumble: 'white'},
-  FINISH: { road: '#663300',   grass: '#663300', rumble: '#663300'}
+  FINISH: { road: '#FFF8DC',   grass: '#663300', rumble: '#663300'}
 };
 
 
 var BACKGROUND = {
-  HILLS: { x:   5, y:   2400, w: 2700, h: 900 },
-  SKY:   { x:   0, y: 5, w: 2500, h: 1300 },
-  TREES: { x:   5, y: 1310, w: 2700, h: 1080 }
+  HILLS: { x:   5, y: 1510  , w: 2665, h: 600 },
+  SKY:   { x:   0, y: 5, w: 2665, h: 1500 },
+  TREES: { x:   5, y: 1510, w: 2665, h: 600 }
 };
 
 var SPRITES = {
-  TREE1:                  { x: 30, y: 15, w: 600, h: 700},
-  TREE2:                  { x: 70, y: 755, w: 600, h:780},
-  TREE3:                  { x: 70, y: 1645, w: 600, h: 780},
-  TREE4:                  { x: 30, y: 2495, w: 630, h: 750},
-  TREE5:                  { x: 50, y: 3285, w: 620, h: 1000},
-  TREE6:                  { x: 800, y: 15, w: 800, h: 670},
-  TREE7:                  { x: 800, y: 725, w: 800, h: 900},
-  TREE8:                  { x: 750, y: 1665, w: 800, h: 700},
-  TREE9:                  { x: 800, y: 2405, w: 800, h: 820},
-  TREE10:                 { x: 800, y: 3265, w: 800, h: 820},
-  TREE11:                 { x: 1600, y: 15, w: 950, h: 700},
-  TREE12:                 { x: 1600, y: 755, w: 950, h: 850},
-  TREE13:                 { x: 1600, y: 1645, w: 900, h: 750},
-  TREE14:                 { x: 1600, y: 2435, w: 850, h: 800},
-  TREE15:                 { x: 1750, y: 3275, w: 700, h: 900},
+  TREE1:                  { x: 35, y: 15, w: 400, h: 480},
+  TREE2:                  { x: 35, y: 570, w: 400, h:450},
+  TREE3:                  { x: 35, y: 1100, w: 400, h: 500},
+  TREE4:                  { x: 35, y: 1650, w: 400, h: 535},
+  TREE5:                  { x: 600, y: 15, w: 425, h: 450},
+  TREE6:                  { x: 700, y: 535, w: 260, h: 535},
+  TREE7:                  { x: 600, y: 1125, w: 400, h: 500},
+  TREE8:                  { x: 600, y: 1675, w: 410, h: 500},
+  TREE9:                  { x: 35, y: 2250, w: 600, h: 730},
+  TREE10:                 { x: 625, y: 2250, w: 660, h: 725},
+  TREE11:                 { x: 35, y: 3000, w: 700, h: 640},
+  TREE12:                 { x: 800, y: 3025, w: 525, h: 610},
   BUILDING1_RIGHT:        { x: 2550, y: 15, w: 1250, h: 700},
   BUILDING2_RIGHT:        { x: 2550, y: 755, w: 1000, h: 1550},
   BUILDING2_LEFT:         { x: 3590, y: 755, w: 1000, h: 1550},
   BUILDING3_RIGHT:        { x: 2550, y: 2345, w: 1000, h: 1200},
   BUILDING3_LEFT:         { x: 3640, y: 2345, w: 1000, h: 1220},
+  BUILDING4_LEFT:         { x: 25, y: 3700, w: 800, h: 1200},
+  BUILDING5:              { x: 25, y: 4925, w: 950, h: 600},
+  BUILDING6_RIGHT:        { x: 25, y: 5675, w: 1100, h: 600},
+  BUILDING9_RIGHT:        { x: 1150, y: 3500, w: 925, h: 1000},
+  BUILDING9_LEFT:         { x: 2250, y: 3500, w: 925, h: 1000},
+  BUILDING10_RIGHT:       { x: 1250, y: 4650, w: 825, h: 575},
+  BUILDING10_LEFT:        { x: 2125, y: 4650, w: 825, h: 575},
+  BUILDING11_RIGHT:       { x: 1200, y: 5275, w: 850, h: 850},
+  BUILDING11_LEFT:        { x: 2125, y: 5275, w: 850, h: 850},
   MONUMENT_LEFT:          { x: 4800, y: 3100, w: 700, h: 900},
   MONUMENT_RIGHT:         { x: 5540, y: 3100, w: 700, h: 900},
-  PLAYER_UPHILL_LEFT:     { x: 4790, y: 2180, w:  400, h:   200 },
-  PLAYER_UPHILL_STRAIGHT: { x: 5180, y: 2180, w:  400, h:   200 },
-  PLAYER_UPHILL_RIGHT:    { x: 4790, y: 2400, w: 400, h:   200 },
-  PLAYER_LEFT:            { x:  4790, y:  2180, w:  400, h:   200 },
-  PLAYER_STRAIGHT:        { x: 5180, y:  2180, w:  400, h:   200 },
-  PLAYER_RIGHT:           { x:  4790, y:  2400, w:  400, h:   200 },
-  TEST:{x:35,y:15,w:400,h:500}
+  PLAYER_UPHILL_LEFT:     { x: 2300, y: 950, w:  280, h:   225 },
+  PLAYER_UPHILL_STRAIGHT: { x: 2300, y: 950, w:  280, h:   225 },
+  PLAYER_UPHILL_RIGHT:    { x: 2300, y: 950, w: 280, h:   225 },
+  PLAYER_LEFT:            { x:  2300, y:  950, w:  280, h:   225 },
+  PLAYER_STRAIGHT:        { x: 2300, y:  950, w:  280, h:   225 },
+  PLAYER_RIGHT:           { x:  2300, y:  950, w:  280, h:   225 },
+  TEST:{x:2125,y:5275,w:850,h:850}
 };
 
-SPRITES.SCALE = 0.3 * (1/SPRITES.PLAYER_STRAIGHT.w)*2 // the reference sprite width should be 1/3rd the (half-)roadWidth
+SPRITES.SCALE = 0.35 * (1/SPRITES.PLAYER_STRAIGHT.w)*2 // the reference sprite width should be 1/3rd the (half-)roadWidth
 //SPRITES.SCALE = 0.3*(1/80)
 
 SPRITES.BILLBOARDS = [SPRITES.BILLBOARD01, SPRITES.BILLBOARD02, SPRITES.BILLBOARD03, SPRITES.BILLBOARD04, SPRITES.BILLBOARD05, SPRITES.BILLBOARD06, SPRITES.BILLBOARD07, SPRITES.BILLBOARD08, SPRITES.BILLBOARD09];

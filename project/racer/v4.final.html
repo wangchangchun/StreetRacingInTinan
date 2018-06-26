@@ -35,6 +35,8 @@
     <img id = "place" src = "./images/res/castle.png"/>
   </div>
 
+  <img id = "pre_des" src = "./images/res/nest.png"/>
+
   <div id = "introduction">
     <p>這是就是接官亭啊，<br>
       看起來還真是氣派的牌坊呢…<br>
@@ -137,9 +139,11 @@ $("#return").click(()=>{
     var track_num = window.sessionStorage.getItem("track_num");
     //var car_num = window.sessionStorage.getItem("car_num");
     if(track_num == 1)document.getElementById("place").setAttribute("src","./images/res/castle.png");
-    else if(track_num == 2)document.getElementById("place").setAttribute("src","./images/res/hall.png");
+    else if(track_num == 2)document.getElementById("place").setAttribute("src","./images/res/palace.png");
     else if(track_num == 3)document.getElementById("place").setAttribute("src","./images/res/temple.png");
     else if(track_num == 4)document.getElementById("place").setAttribute("src","./images/res/park.png");
+
+    var player_sprite = SPRITES.PLAYER_STRAIGHT;
 
     var keyLeft        = false;
     var keyRight       = false;
@@ -236,8 +240,19 @@ $("#return").click(()=>{
       hillOffset = Util.increase(hillOffset, hillSpeed * playerSegment.curve * (position-startPosition)/segmentLength, 1);
       treeOffset = Util.increase(treeOffset, treeSpeed * playerSegment.curve * (position-startPosition)/segmentLength, 1);
 
+      //if(position > trackLength - segmentLength*3000)player_sprite = SPRITES.TREE1;
+
+      if(position > trackLength - segmentLength*700){
+        $('#pre_des').show();
+        $('#pre_des').animate({height: "600px", width: "1200px", top: "3%", left: "3%"},1000);
+      }
+      else{
+        $('#pre_des').hide();
+      }
+
       if(position > trackLength - segmentLength*650){
         gameover = true;
+        $('#pre_des').hide();
         if(!recordSend){
         $.ajax({
             method: "post",
@@ -446,7 +461,7 @@ function render() {
         }
 
         if (segment == playerSegment) {
-          Render.player(ctx, width, height, resolution, roadWidth, sprites, speed/maxSpeed,
+          Render.player(ctx, 2*width/3, 2*height/3, resolution, roadWidth, sprites, player_sprite, speed/maxSpeed,
                         cameraDepth/playerZ,
                         width/2,
                         (height/2) - (cameraDepth/playerZ * Util.interpolate(playerSegment.p1.camera.y, playerSegment.p2.camera.y, playerPercent) * height/2),
@@ -477,7 +492,7 @@ function addSegment(curve, y) {
     curve: curve,
     sprites: [],
     cars: [],
-    color: (n > 3740)? COLORS.FINISH : !(Math.floor(n/rumbleLength)%100) ? COLORS.INTERSECTION : !(Math.floor((n - 3)/rumbleLength)%100) ? COLORS.INTERSECTION : !(Math.floor((n - 6)/rumbleLength)%100) ? COLORS.INTERSECTION : !(Math.floor((n + 3)/rumbleLength)%100)? COLORS.INTERSECTION:(Math.floor(n/rumbleLength)%2)? COLORS.LIGHT:COLORS.DARK
+    color: (n > 3600)? COLORS.FINISH : !(Math.floor(n/rumbleLength)%100) ? COLORS.INTERSECTION : !(Math.floor((n - 3)/rumbleLength)%100) ? COLORS.INTERSECTION : !(Math.floor((n - 6)/rumbleLength)%100) ? COLORS.INTERSECTION : !(Math.floor((n + 3)/rumbleLength)%100)? COLORS.INTERSECTION:(Math.floor(n/rumbleLength)%2)? COLORS.LIGHT:COLORS.DARK
 
   });
 }
@@ -644,24 +659,50 @@ function resetRoad() {
 
 function resetSprites() {
   var n, i;
+
+  // for building-left
   for(n = 0;n < 3500;n += 10){
 
     // Avoid sprites appearing on intersections
     if((Math.floor(n/rumbleLength)%100 == 0) || (Math.floor((n - 3)/rumbleLength)% 100 == 0) || (Math.floor((n - 6)/rumbleLength)%100 == 0))continue;
     
-    if(n < 1000){addSprite(n,SPRITES.TEST,-1.2);}
-    //else if(n < 2000)addSprite(n,SPRITES.TREE2,-1.2);
-    //else addSprite(n,SPRITES.TREE3,-1.2);
-  
+    else if((n > 520) && (n < 750)){addSprite(n,SPRITES.BUILDING10_LEFT,-4);}
+    else if((n >= 750) && (n < 1000)){addSprite(n,SPRITES.BUILDING11_LEFT,-4);}
+    else if((n >= 1500) && (n < 1750)){addSprite(n,SPRITES.BUILDING11_LEFT,-4);}
+    else if((n >= 1750) && (n < 2000)){addSprite(n,SPRITES.BUILDING10_LEFT,-4);}
+    else if(n == 2250)addSprite(n,SPRITES.BUILDING5,-3);
+    else if(n == 2750)addSprite(n,SPRITES.BUILDING4_LEFT,-3);
+
   }
+
+  // for building-right
   for(n = 5;n < 3500;n += 10){
 
     // Avoid sprites appearing on intersections
     if((Math.floor(n/rumbleLength)%100 == 0) || (Math.floor((n - 3)/rumbleLength)%100 == 0) || (Math.floor((n - 6)/rumbleLength)%100) == 0)continue;
     
-    if(n < 1000)addSprite(n,SPRITES.TEST,1.2);
-    //else if(n < 2000)addSprite(n,SPRITES.TREE2,1.2);
-    //else addSprite(n,SPRITES.TREE3,1.2);
+    else if((n > 520) && (n < 750)){addSprite(n,SPRITES.BUILDING10_RIGHT,5);}
+    else if((n >= 750) && (n < 1000)){addSprite(n,SPRITES.BUILDING11_RIGHT,5);}
+    else if((n >= 1500) && (n < 1750)){addSprite(n,SPRITES.BUILDING11_RIGHT,5);}
+    else if((n >= 1750) && (n < 2000)){addSprite(n,SPRITES.BUILDING10_RIGHT,5);}
+    else if(n == 2505)addSprite(n,SPRITES.BUILDING6_RIGHT,3);
+
+  }
+
+  // for trees
+  for(n = 0;n < 3500;n += 20){
+
+    // Avoid sprites appearing on intersections 
+    if((Math.floor(n/rumbleLength)%100 == 0) || (Math.floor((n - 3)/rumbleLength)% 100 == 0) || (Math.floor((n - 6)/rumbleLength)%100 == 0))continue;
+    
+    if(n < 520){addSprite(n,SPRITES.TREE11,-2);addSprite(n,SPRITES.TREE11,2);}
+    else if(n < 2000){
+      if(n%100 == 0){addSprite(n,SPRITES.TREE1,-2);addSprite(n,SPRITES.TREE1,2);}
+      else if(n%80 == 0){addSprite(n,SPRITES.TREE2,-2);addSprite(n,SPRITES.TREE2,2);}
+      else if((n%60 == 0) || (n%40 == 0)){addSprite(n,SPRITES.TREE3,-2);addSprite(n,SPRITES.TREE3,2);}
+    }
+    else if(((n >= 2200) && (n < 2300)) || ((n >= 2700) && (n <= 2800)))continue;
+    else if(n < 3200){addSprite(n,SPRITES.TREE11,-2);addSprite(n,SPRITES.TREE11,2);}
   
   }
 
