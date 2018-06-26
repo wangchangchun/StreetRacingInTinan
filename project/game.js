@@ -2,7 +2,7 @@ $(document).ready(function() {
   const ID = window.sessionStorage.getItem("playId");
   $("#game").hide();
   $("#waitingRoom").hide();
-  $.ajax({
+  /*$.ajax({
     url:"./readBtn",
     method:"POST",
     type:"get",
@@ -16,10 +16,11 @@ $(document).ready(function() {
           $("#roomList").append("<button class='ui purple button'>"+sp[i]+"</button>")
         }
     }
-  })
+  })*/
   var socket = io();
   $("#createOk").click(()=>{
       socket.emit('create',{id:ID,num:$('#numSelect').val(),map:$('#mapSelect').val()});
+      console.log($('#mapSelect').val())
       $('#createModal').modal('hide');
       $("#background").html("<img class='img-fuild' id='bg_pic' src='./src/bg.png'>")
       $("#menu").hide();
@@ -50,6 +51,7 @@ $(document).ready(function() {
   })
   socket.on('start',function(data){
     //alert('get start')
+    window.sessionStorage.setItem("map",data)
       $("#waitingRoom").hide();
       $("#game").show();
       $("#background").hide();
@@ -187,6 +189,7 @@ function update(dt) {
   var speedPercent  = speed/maxSpeed;
   var dx            = dt * 2 * speedPercent; // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
   var startPosition = position;
+  track_num = window.sessionStorage.getItem("map")
   if(!gameover){
     document.getElementById("introduction").style.display = 'none';
     document.getElementById("destination").style.display = 'none';

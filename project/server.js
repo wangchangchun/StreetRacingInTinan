@@ -362,7 +362,11 @@ io.on('connection', function(socket){
   });
   socket.on('startGame',function(data){
     //console.log("room "+data+" start");
-    io.sockets.in(data).emit('start',data);
+    var start = "SELECT map FROM `uidd2018_groupI`.`roomList` WHERE id =\""+data+"\";"
+    connection.query(start,(err,rows,field)=>{
+      io.sockets.in(data).emit('start',rows[0].map);
+      console.log(rows[0].map)
+    })
   });
   socket.on('position',function(data){
     //console.log("id "+data.id+" roomId "+data.roomId+" position "+data.position)
