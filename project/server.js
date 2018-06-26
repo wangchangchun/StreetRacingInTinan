@@ -8,7 +8,7 @@ var ca_bundle = fs.readFileSync('./ssl/ca_bundle.crt','utf8');
 var credentials = {key: privateKey, cert: certificate};
 const express = require('express');
 const app = express();
-const port = 10086; // 請改成各組分配的port
+const port = 10088; // 請改成各組分配的port
 const bodyParser = require('body-parser');
 const urlencodedParser = bodyParser.urlencoded({extended:true});
 //const config = require('./config');
@@ -120,7 +120,7 @@ app.post("/public/fb_read",urlencodedParser,function(req, res) {
         if(rows.length==0){
           sql = "INSERT INTO `mytable` ( name , id ,play) VALUES ('"+fb_name+"','"+fb_id+"',0)";
           connection.query(sql)
-            var achsql = "INSERT INTO `achievement` (id,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16,a17,a18) VALUES (\""+fb_id+"\",0,0,0,0,0,0,0,0,0,0,,0,0,0,00,0,0,0)";
+            var achsql = "INSERT INTO `achievement` (id,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16,a17,a18) VALUES (\""+fb_id+"\",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)";
           connection.query(achsql)
         }
       res.send("login succeed!")
@@ -162,13 +162,13 @@ app.post("/racer/saveRecord",urlencodedParser,function(req,res){
     connection.query("SELECT * FROM `uidd2018_groupI`.`mytable` WHERE id = \""+id+"\";",(err,rows,fields)=>{ 
       if(err) console.log("read err");
       else{
+        var account = rows[0]['name'];
         connection.query("UPDATE `uidd2018_groupI`.`achievement` SET a"+(++map)+"=1 WHERE id = \""+id+"\"");
         var play = rows[0]['play']+1;
         var update_str = "UPDATE `uidd2018_groupI`.`mytable` SET `play`="+ play+" WHERE id =\""+id+"\";";
         connection.query(update_str);
-        var insert_data = "INSERT INTO `uidd2018_groupI`. `record` (id,name,map,num,time) VALUES(\""+id+"\",\""+account+"\","+map+","+play+","+time+");";
+        var insert_data = "INSERT INTO `uidd2018_groupI`. `record` (id,name,map,num,time) VALUES(\""+id+"\",\""+account+"\","+(--map)+","+play+","+time+");";
         connection.query(insert_data);
-        var account = rows[0]['name'];
         connection.query("SELECT * FROM `uidd2018_groupI`.`achievement` WHERE id = \""+id+"\";",(err,r,fields)=>{ 
           if(play>=1&&!r[0].a1)
             connection.query("UPDATE `uidd2018_groupI`.`achievement` SET a1=1 WHERE id = \""+id+"\"");
