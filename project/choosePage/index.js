@@ -11,8 +11,8 @@ $(document).ready(function(){
         //$('#building').hide();
         $('#track').hide();
         window.sessionStorage.setItem("track_num",track_num);
-        document.location.href = "./v4.final.html";
-        //document.location.href = "https://luffy.ee.ncku.edu.tw:10088/racer/v4.final.html?"+id;
+      //  document.location.href = "./v4.final.html";
+        document.location.href = "https://luffy.ee.ncku.edu.tw:10088/racer/v4.final.html";
     });
 
     $('#track1').click(function(){track_num = 1;});
