@@ -301,7 +301,7 @@ io.on('connection', function(socket){
   });
   socket.on('position',function(data){
     //console.log("id "+data.id+" roomId "+data.roomId+" position "+data.position)
-      socket.broadcast.in(data.roomId).emit('rivalPosition',{id:data.id,position:data.position})
+      socket.broadcast.in(data.roomId).emit('rivalPosition',{id:data.id,position:data.position,playerX:data.playerX})
       //socket.broadcast.in(roomId).emit('message', 'joined this room.');
   
   })
