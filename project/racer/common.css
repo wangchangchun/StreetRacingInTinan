@@ -8,7 +8,7 @@ body          { font-family: Arial, Helvetica, sans-serif; }
 #canvas       { position: absolute; z-index: 0; width: 95vw; height: 95vh; z-index: 0; background-color: #72D7EE; }
 #mute         { background-position:   0px 0px; width: 32px; height: 32px; background: url(images/mute.png); display: inline-block; cursor: pointer; position: absolute; margin-left: 20em; }
 #mute.on      { background-position: -32px 0px; }
-#introduction { position: absolute; z-index: 0; width: 50vw; height: 360px; background-color: #B0E0E6; opacity: 0.8;}
+#introduction { position: absolute; z-index: 0; width: 50vw; height: 360px; opacity: 0.8;left:5%;}
 #return       { position: absolute; z-index: 0; width: 100px; height: 20px; top:20%;left:80%;  }
 #destination  { position: absolute; z-index: 0; width: 60vw; height: 300px; left: 15%; top: 10%;}
 #place        { position: absolute; z-index: 0; width:10vw; height: 50px; left: 48%; top: 65%;}

@@ -159,6 +159,7 @@ var rival          = 0;
 var player_sprite = SPRITES.PLAYER_STRAIGHT;
 // for selecting track and car
 var track_num = $('#mapSelect').val();
+console.log(track_num);
 //var car_num = window.sessionStorage.getItem("car_num");
 if(track_num == 1)document.getElementById("place").setAttribute("src","./images/res/castle.png");
 else if(track_num == 2)document.getElementById("place").setAttribute("src","./images/res/hall.png");
