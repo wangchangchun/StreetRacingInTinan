@@ -247,6 +247,7 @@ function update(dt) {
         url: "./racer/saveRecord",
         data: {
           ID:id ,
+          map:track_num,
           THISTIME: currentLapTime
         },
         success: function(data) {

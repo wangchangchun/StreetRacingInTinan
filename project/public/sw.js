@@ -8,13 +8,11 @@ const cacheFile = [
   './building.png',
   './car.png',
   './line.png',
-  './login.css',
-  './login.html',
   './name.png',
   './student id.png'
 ]
 
-const cacheKey = 'TSR_v1'
+const cacheKey = 'TSR_v2'
 
 // install
 self.addEventListener('install', event => {

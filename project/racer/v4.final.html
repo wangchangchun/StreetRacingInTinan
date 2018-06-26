@@ -259,6 +259,7 @@ $("#return").click(()=>{
             url: "./saveRecord",
             data: {
               ID:id ,
+              map:track_num,
               THISTIME: currentLapTime
             },
             success: function(data) {

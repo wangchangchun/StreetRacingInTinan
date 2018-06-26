@@ -29,7 +29,7 @@ img
 #menuBtn{
   position:relative;
   max-width: 20vw;
-  padding-top:20%;
+  padding-top:15%;
   left:10%;
   top:0%;
   opacity:0;
@@ -97,6 +97,7 @@ img
     position:absolute;
     z-index: 10;
     max-width:10vw;
+    top:70%;
     left:5%;
 	opacity:0;
 }
@@ -105,7 +106,7 @@ img
     left:24%;
     top:25%;
     width:80vw;
-    height:65vh;
+    height:50vh;
 }
 #tabMenu{
   position:absolute;
@@ -114,4 +115,13 @@ img
   width:20vw;
   height:20vh;
 
+}
+#achTable{
+  overflow:scroll;
+  z-index:10;
+  position:absolute;
+  left:24%;
+  top:25%;
+  width:80vw;
+  height:75vh;
 }

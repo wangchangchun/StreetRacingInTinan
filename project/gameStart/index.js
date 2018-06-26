@@ -6,7 +6,7 @@ function tabClick(tab){
     $("#"+tab.id).addClass("active")
     var tabNum= tab.id[3];
   $("#record"+tabNum).addClass("active")
-    if ($("#menuBtn1").hasClass("active")){
+    if ($("#menuBtn2").hasClass("active")){
       var str = " ID = \""+ID+"\" AND";
       //    alert(str)
       $.ajax({
@@ -22,7 +22,7 @@ function tabClick(tab){
         }
       })
     }
-  if ($("#menuBtn2").hasClass("active")){
+  if ($("#menuBtn1").hasClass("active")){
     var str = " ";
     $.ajax({
       method: "post",
@@ -45,7 +45,8 @@ function menuClick(btn){
     $(".record").removeClass("active")
     $("#tab1").addClass("active")
     $("#record1").addClass("active")
-    if ($("#menuBtn1").hasClass("active")){
+    if ($("#menuBtn2").hasClass("active")){
+    $("#achTable").hide();
       var str = " ID = \""+ID+"\" AND ";
       //    alert(str)
       $.ajax({
@@ -61,7 +62,8 @@ function menuClick(btn){
         }
       })
     }
-  if ($("#menuBtn2").hasClass("active")){
+  if ($("#menuBtn1").hasClass("active")){
+    $("#achTable").hide();
     var str = " ";
     $.ajax({
       method: "post",
@@ -76,12 +78,34 @@ function menuClick(btn){
       }
     })
   }
+  if ($("#menuBtn3").hasClass("active")){
+      $("#achTable").show();
+      $.ajax({
+          method:"post",
+          url:"./readAch",
+          data:{
+              id:ID
+          },
+          success:function(data){
+            var arr = data;
+            for (var i=0;i< 14;i++){
+              if(arr[i]==1)
+                $("#a"+(i+1)).html("<i class=\"large green checkmark icon\"></i>")
+            
+            }
+          
+          }
+
+      })
+  
+  }
 }
 $(document).ready(function(){
   var url = window.location.href;
   $("#return").hide();
   $("#score").hide();
   $("#achPage").hide();
+  $("#achTable").hide();
   //$("#share").hide(); 
   //$("#testData").text("WELCOME TO TSR "+ID);
   $("#blue").css("transform","rotate(720deg) scale(1)");
@@ -128,7 +152,7 @@ $(document).ready(function(){
     $("#car").hide();
     $("#building").hide();
     $("#blue").hide();
-    var str = " ID = \""+ID+"\" AND";
+    var str = " ";
     $.ajax({
       method: "post",
       url: "./readRecord",
