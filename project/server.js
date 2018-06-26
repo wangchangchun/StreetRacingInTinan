@@ -154,6 +154,20 @@ app.post("/gameStart/readRecord",urlencodedParser,function(req,res){
     })
 
 })
+app.post("/racer/saveCollide",urlencodedParser,function(req,res){
+    var id = req.param('id');
+    var coll = req.param('collide')
+      console.log("coll: "+coll)
+    connection.query("SELECT * FROM `uidd2018_groupI`.`achievement` WHERE id = \""+id+"\";",(err,r,fields)=>{ 
+      if(coll>=10&&!r[0].a10)
+            connection.query("UPDATE `uidd2018_groupI`.`achievement` SET a10=1 WHERE id = \""+id+"\"");
+      if(coll>=15&&!r[0].a11)
+            connection.query("UPDATE `uidd2018_groupI`.`achievement` SET a11=1 WHERE id = \""+id+"\"");
+      if(coll>=30&&!r[0].a12)
+            connection.query("UPDATE `uidd2018_groupI`.`achievement` SET a12=1 WHERE id = \""+id+"\"");
+
+    })
+})
 app.post("/racer/saveRecord",urlencodedParser,function(req,res){
   var id = req.param('ID');
   var time = req.param('THISTIME');
@@ -162,7 +176,7 @@ app.post("/racer/saveRecord",urlencodedParser,function(req,res){
     connection.query("SELECT * FROM `uidd2018_groupI`.`mytable` WHERE id = \""+id+"\";",(err,rows,fields)=>{ 
       if(err) console.log("read err");
       else{
-        var account = rows[0]['name'];
+        var account = rows[0].name;
         connection.query("UPDATE `uidd2018_groupI`.`achievement` SET a"+(++map)+"=1 WHERE id = \""+id+"\"");
         var play = rows[0]['play']+1;
         var update_str = "UPDATE `uidd2018_groupI`.`mytable` SET `play`="+ play+" WHERE id =\""+id+"\";";
