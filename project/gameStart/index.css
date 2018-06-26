@@ -27,11 +27,11 @@ img
 	height:95 vh;
 }
 #menuBtn{
-  position:relative;
+  position:absolute;
   max-width: 20vw;
-  padding-top:15%;
+  padding-top:23%;
   left:10%;
-  top:0%;
+  top:-10%;
   opacity:0;
 }
 #start{
