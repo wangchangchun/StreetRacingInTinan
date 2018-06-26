@@ -154,6 +154,7 @@ var totalCars      = 200;                     // total number of cars on the roa
 var currentLapTime = 0;                       // current lap time
 var lastLapTime    = null;                    // last lap time
 var rival          = 0;
+var player_sprite = SPRITES.PLAYER_STRAIGHT;
 // for selecting track and car
 var track_num = $('#mapSelect').val();
 //var car_num = window.sessionStorage.getItem("car_num");
@@ -365,6 +366,15 @@ function updateCarOffset(car, carSegment, playerSegment, playerW) {
     var playerSegment = findSegment(position+playerZ);
     var playerPercent = Util.percentRemaining(position+playerZ, segmentLength);
     var playerY       = Util.interpolate(playerSegment.p1.world.y, playerSegment.p2.world.y, playerPercent);
+    
+    var position_r = window.sessionStorage.getItem("rival");
+    var baseSegment_r = findSegment(position_r);
+    //var basePercent_r = Util.percentRemaining(position_r,segmentLength);
+    var rivalSegment = findSegment(position_r);
+    var rivalPercent = Util.percentRemaining(position_r,segmentLength);
+    //var rivalY = Util.interpolate(rivalSegment.p1.world.y,rivalSegment.p2.world.y,rivalPercent);
+    var rivalX = window.sessionStorage.getItem("rivalX");
+
     var maxy          = height;
     var x  = 0;
     var dx = - (baseSegment.curve * basePercent);
@@ -372,9 +382,9 @@ function updateCarOffset(car, carSegment, playerSegment, playerW) {
     Render.background(ctx, background, width, height, BACKGROUND.SKY,   skyOffset,  resolution * skySpeed  * playerY);
     Render.background(ctx, background, width, height, BACKGROUND.HILLS, hillOffset, resolution * hillSpeed * playerY);
     Render.background(ctx, background, width, height, BACKGROUND.TREES, treeOffset, resolution * treeSpeed * playerY);
-    var n, i, segment, car, sprite, spriteScale, spriteX, spriteY;
+    var n, i, segment, segment_r, car, sprite, spriteScale, spriteX, spriteY;
     for(n = 0 ; n < drawDistance ; n++) {
-      segment        = segments[(baseSegment.index + n) % segments.length];
+      segment        = segments[(baseSegment.index + n) % segments.length]; 
       segment.looped = segment.index < baseSegment.index;
       segment.fog    = Util.exponentialFog(n/drawDistance, fogDensity);
       segment.clip   = maxy;
@@ -415,20 +425,34 @@ function updateCarOffset(car, carSegment, playerSegment, playerW) {
         Render.sprite(ctx, width, height, resolution, roadWidth, sprites, sprite.source, spriteScale, spriteX, spriteY, (sprite.offset < 0 ? -1 : 0), -1, segment.clip);
       }
       if (segment == playerSegment) {
-        Render.player(ctx, width, height, resolution, roadWidth, sprites, speed/maxSpeed,
+        Render.player(ctx, width, height, resolution, roadWidth, sprites, player_sprite, speed/maxSpeed,
             cameraDepth/playerZ,
             width/2,
             (height/2) - (cameraDepth/playerZ * Util.interpolate(playerSegment.p1.camera.y, playerSegment.p2.camera.y, playerPercent) * height/2),
             speed * (keyLeft ? -1 : keyRight ? 1 : 0),
             playerSegment.p2.world.y - playerSegment.p1.world.y);
       }
+
+      // Render Rival
+      if ((segment == rivalSegment) && (position_r - position < 50000)) {
+        Render.player(ctx, width, height, resolution, roadWidth, sprites, player_sprite, speed/maxSpeed,
+            ((5000*cameraDepth)/(playerZ*(position_r - position))),
+            width*((parseFloat(rivalX) + 3.0)/6),
+            (height/2) - (((5000*cameraDepth)/(playerZ*(position_r - position))) * Util.interpolate(playerSegment.p1.camera.y, playerSegment.p2.camera.y, playerPercent) * height/2),
+            0,0);
+        if(position_r - position < 8000){
+            console.log(speed);
+            speed = maxSpeed/5;
+        }
+      }
+
     }
   }
   function findSegment(z) {
     return segments[Math.floor(z/segmentLength) % segments.length]; 
   }
   //=========================================================================
-  // BUILD ROAD GEOMETRY
+  // BUILD ROAD GEOMETRY 
   //=========================================================================
   function lastY() { return (segments.length == 0) ? 0 : segments[segments.length-1].p2.world.y; }
   function addSegment(curve, y) {
@@ -585,28 +609,203 @@ function updateCarOffset(car, carSegment, playerSegment, playerW) {
     trackLength = segments.length * segmentLength;
   }
   function resetSprites() {
-    var n, i;
-    for(n = 0;n < 3500;n += 10){
+     
+  var n;
+
+  if(track_num == 1){
+
+      // for building-left
+      for(n = 0;n < 3500;n += 15){
+
+          // Avoid sprites appearing on intersections
+          if((Math.floor(n/rumbleLength)%100 == 0) || (Math.floor((n - 3)/rumbleLength)% 100 == 0) || (Math.floor((n - 6)/rumbleLength)%100 == 0))continue;
+
+          if(n == 60)addSprite(n,SPRITES.MONUMENT_LEFT,-3);
+          else if((n >= 500) && (n < 750)){addSprite(n,SPRITES.BUILDING1_LEFT,-5);}
+          else if((n >= 750) && (n < 1000)){addSprite(n,SPRITES.BUILDING2_LEFT,-6);}
+          else if((n >= 1600) && (n < 1850)){addSprite(n,SPRITES.BUILDING3_LEFT,-6);}
+
+      }
+
+      // for building-right
+      for(n = 5;n < 3500;n += 15){
+
+          // Avoid sprites appearing on intersections
+          if((Math.floor(n/rumbleLength)%100 == 0) || (Math.floor((n - 3)/rumbleLength)% 100 == 0) || (Math.floor((n - 6)/rumbleLength)%100 == 0))continue;
+
+          if((n >= 500) && (n < 750)){addSprite(n,SPRITES.BUILDING1_RIGHT,5);}
+          else if((n > 750) && (n < 1000)){addSprite(n,SPRITES.BUILDING2_RIGHT,6);}
+          else if((n > 1600) && (n < 1850)){addSprite(n,SPRITES.BUILDING3_RIGHT,6);}
+          else if(n == 2255)addSprite(n,SPRITES.BUILDING9_RIGHT,3);
+          else if(n == 2510)addSprite(n,SPRITES.BUILDING8_RIGHT,3);
+          else if(n == 2765)addSprite(n,SPRITES.BUILDING7_RIGHT,3);
+
+      }
+
+      // for trees
+      for(n = 0;n < 3500;n += 15){
+
+          // Avoid sprites appearing on intersections 
+          if((Math.floor(n/rumbleLength)%100 == 0) || (Math.floor((n - 3)/rumbleLength)% 100 == 0) || (Math.floor((n - 6)/rumbleLength)%100 == 0))continue;
+    
+          if(((n <= 200)) || ((n >= 2200) && (n < 2300)) || ((n >= 2450) && (n <= 2550)) || ((n >= 2700) && (n <= 2800)))continue;
+          else if(n < 3200){
+            if(n%75 == 0){addSprite(n,SPRITES.TREE5,-2);addSprite(n,SPRITES.TREE5,2);}
+            else if(n%60 == 0){addSprite(n,SPRITES.TREE7,-2);addSprite(n,SPRITES.TREE7,2);}
+            else if((n%45 == 0) || (n%30 == 0)){addSprite(n,SPRITES.TREE6,-2);addSprite(n,SPRITES.TREE6,2);}
+            else if(n%15 == 0){addSprite(n,SPRITES.TREE8,-2);addSprite(n,SPRITES.TREE8,2);}
+          }
+  
+      }
+
+  }
+
+  else if(track_num == 2){
+
+    // for building-left
+    for(n = 0;n < 3500;n += 20){
+
       // Avoid sprites appearing on intersections
       if((Math.floor(n/rumbleLength)%100 == 0) || (Math.floor((n - 3)/rumbleLength)% 100 == 0) || (Math.floor((n - 6)/rumbleLength)%100 == 0))continue;
-
-      if(n < 1000){addSprite(n,SPRITES.TEST,-1.2);}
-      //else if(n < 2000)addSprite(n,SPRITES.TREE2,-1.2);
-      //else addSprite(n,SPRITES.TREE3,-1.2);
+    
+      if((n > 520) && (n < 750)){addSprite(n,SPRITES.BUILDING10_LEFT,-6);}
+      else if((n >= 750) && (n < 1000)){addSprite(n,SPRITES.BUILDING11_LEFT,-6);}
+      else if((n >= 1500) && (n < 1750)){addSprite(n,SPRITES.BUILDING11_LEFT,-6);}
+      else if((n >= 1750) && (n < 2000)){addSprite(n,SPRITES.BUILDING10_LEFT,-6);}
+      else if(n == 2260)addSprite(n,SPRITES.BUILDING5,-3);
+      else if(n == 2760)addSprite(n,SPRITES.BUILDING4_LEFT,-3);
 
     }
-    for(n = 5;n < 3500;n += 10){
+
+    // for building-right
+    for(n = 5;n < 3500;n += 20){
+
       // Avoid sprites appearing on intersections
       if((Math.floor(n/rumbleLength)%100 == 0) || (Math.floor((n - 3)/rumbleLength)%100 == 0) || (Math.floor((n - 6)/rumbleLength)%100) == 0)continue;
-
-      if(n < 1000)addSprite(n,SPRITES.TEST,1.2);
-      //else if(n < 2000)addSprite(n,SPRITES.TREE2,1.2);
-      //else addSprite(n,SPRITES.TREE3,1.2);
+    
+      if((n > 520) && (n < 750)){addSprite(n,SPRITES.BUILDING10_RIGHT,6);}
+      else if((n >= 750) && (n < 1000)){addSprite(n,SPRITES.BUILDING11_RIGHT,6);}
+      else if((n >= 1500) && (n < 1750)){addSprite(n,SPRITES.BUILDING11_RIGHT,6);}
+      else if((n >= 1750) && (n < 2000)){addSprite(n,SPRITES.BUILDING10_RIGHT,6);}
+      else if(n == 2505)addSprite(n,SPRITES.BUILDING6_RIGHT,3);
 
     }
-    // For the finishing line
-    //addSprite(3750,SPRITES.MONUMENT_LEFT,-1.5);  
+
+    // for trees
+    for(n = 0;n < 3500;n += 20){
+
+      // Avoid sprites appearing on intersections 
+      if((Math.floor(n/rumbleLength)%100 == 0) || (Math.floor((n - 3)/rumbleLength)% 100 == 0) || (Math.floor((n - 6)/rumbleLength)%100 == 0))continue;
+    
+      if(n < 520){addSprite(n,SPRITES.TREE10,-2);addSprite(n,SPRITES.TREE10,2);}
+      else if(n < 2000){
+        if(n%100 == 0){addSprite(n,SPRITES.TREE1,-2);addSprite(n,SPRITES.TREE1,2);}
+        else if(n%80 == 0){addSprite(n,SPRITES.TREE2,-2);addSprite(n,SPRITES.TREE2,2);}
+        else if((n%60 == 0) || (n%40 == 0)){addSprite(n,SPRITES.TREE3,-2);addSprite(n,SPRITES.TREE3,2);}
+        else if(n%20 == 0){addSprite(n,SPRITES.TREE4,-2);addSprite(n,SPRITES.TREE4,2);}
+      }
+      else if(((n >= 2200) && (n < 2300)) || ((n >= 2450) && (n <= 2550)) || ((n >= 2700) && (n <= 2800)))continue;
+      else if(n < 3200){addSprite(n,SPRITES.TREE10,-2);addSprite(n,SPRITES.TREE10,2);}
+  
+    }
+
   }
+
+  else if(track_num == 3){
+
+
+      // for building-left
+      for(n = 0;n < 3500;n += 15){
+
+          // Avoid sprites appearing on intersections
+          if((Math.floor(n/rumbleLength)%100 == 0) || (Math.floor((n - 3)/rumbleLength)% 100 == 0) || (Math.floor((n - 6)/rumbleLength)%100 == 0))continue;
+
+          if(n == 105)addSprite(n,SPRITES.BUILDING20,-3);
+          else if((n > 1000) && (n <= 1250)){addSprite(n,SPRITES.BUILDING13_LEFT,-6);}
+          else if((n > 1500) && (n <= 1750)){addSprite(n,SPRITES.BUILDING13_LEFT,-6);}
+          else if((n == 1845) || (n == 2010) || (n == 2145)){addSprite(n,SPRITES.BUILDING19_LEFT,-3);}
+
+      }
+
+      // for building-right
+      for(n = 5;n < 3500;n += 15){
+
+          // Avoid sprites appearing on intersections
+          if((Math.floor(n/rumbleLength)%100 == 0) || (Math.floor((n - 3)/rumbleLength)% 100 == 0) || (Math.floor((n - 6)/rumbleLength)%100 == 0))continue;
+
+          if((n > 1000) && (n <= 1250)){addSprite(n,SPRITES.BUILDING13_RIGHT,6);}
+          else if((n > 1500) && (n <= 1750)){addSprite(n,SPRITES.BUILDING13_RIGHT,6);}
+
+      }
+
+      // for trees
+      for(n = 0;n < 3500;n += 15){
+
+          // Avoid sprites appearing on intersections 
+          if((Math.floor(n/rumbleLength)%100 == 0) || (Math.floor((n - 3)/rumbleLength)% 100 == 0) || (Math.floor((n - 6)/rumbleLength)%100 == 0))continue;
+    
+          if((n <= 200) || ((n >= 1750) && (n < 2250)))continue;
+          else if(n < 2500){
+            if(n%75 == 0){addSprite(n,SPRITES.TREE2,-2);addSprite(n,SPRITES.TREE2,2);}
+            else if(n%60 == 0){addSprite(n,SPRITES.TREE11,-2);addSprite(n,SPRITES.TREE11,2);}
+            else if((n%45 == 0) || (n%30 == 0)){addSprite(n,SPRITES.TREE6,-2);addSprite(n,SPRITES.TREE6,2);}
+            else if(n%15 == 0){addSprite(n,SPRITES.TREE8,-2);addSprite(n,SPRITES.TREE8,2);}
+          }
+      
+      }
+
+  }
+
+  else if(track_num == 4){
+
+
+      // for building-left
+      for(n = 0;n < 3500;n += 15){
+
+          // Avoid sprites appearing on intersections
+          if((Math.floor(n/rumbleLength)%100 == 0) || (Math.floor((n - 3)/rumbleLength)% 100 == 0) || (Math.floor((n - 6)/rumbleLength)%100 == 0))continue;
+
+          if(n == 60)addSprite(n,SPRITES.BUILDING16,-3);
+          else if((n > 1000) && (n <= 1500)){addSprite(n,SPRITES.BUILDING11_LEFT,-6);}
+          else if((n >= 2000) && (n < 2250)){addSprite(n,SPRITES.BUILDING18_LEFT,-4);addSprite(n,SPRITES.BUILDING18S_LEFT,-10);}
+          else if((n >= 2250) && (n < 2500)){addSprite(n,SPRITES.BUILDING17_LEFT,-4);addSprite(n,SPRITES.BUILDING17S_LEFT,-10);}
+
+      }
+
+      // for building-right
+      for(n = 5;n < 3500;n += 15){
+
+          // Avoid sprites appearing on intersections
+          if((Math.floor(n/rumbleLength)%100 == 0) || (Math.floor((n - 3)/rumbleLength)% 100 == 0) || (Math.floor((n - 6)/rumbleLength)%100 == 0))continue;
+
+          if(n == 500){addSprite(n,SPRITES.BUILDING15,3);}
+          else if((n > 1000) && (n <= 1500)){addSprite(n,SPRITES.BUILDING11_RIGHT,6);}
+          else if((n >= 2000) && (n < 2250)){addSprite(n,SPRITES.BUILDING18_RIGHT,4);addSprite(n,SPRITES.BUILDING18S_RIGHT,10);}
+          else if((n >= 2250) && (n < 2500)){addSprite(n,SPRITES.BUILDING17_RIGHT,4);addSprite(n,SPRITES.BUILDING17S_RIGHT,10);}
+
+      }
+
+      // for trees
+      for(n = 0;n < 3500;n += 15){
+
+          // Avoid sprites appearing on intersections 
+          if((Math.floor(n/rumbleLength)%100 == 0) || (Math.floor((n - 3)/rumbleLength)% 100 == 0) || (Math.floor((n - 6)/rumbleLength)%100 == 0))continue;
+    
+          if((n <= 200) || ((n >= 400) && (n < 600)))continue;
+          else if(n < 2500){
+            if(n%75 == 0){addSprite(n,SPRITES.TREE1,-2);addSprite(n,SPRITES.TREE1,2);}
+            else if(n%60 == 0){addSprite(n,SPRITES.TREE3,-2);addSprite(n,SPRITES.TREE3,2);}
+            else if((n%45 == 0) || (n%30 == 0)){addSprite(n,SPRITES.TREE9,-2);addSprite(n,SPRITES.TREE9,2);}
+            else if(n%15 == 0){addSprite(n,SPRITES.TREE7,-2);addSprite(n,SPRITES.TREE7,2);}
+          }
+          else if(n < 3200){addSprite(n,SPRITES.TREE12,-2);addSprite(n,SPRITES.TREE12,2);}
+  
+      }
+
+  }
+
+  }
+
   function resetCars() {
   }
   //=========================================================================

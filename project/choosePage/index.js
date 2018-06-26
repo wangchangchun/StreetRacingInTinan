@@ -7,12 +7,9 @@ $(document).ready(function(){
     $('#pointer').hide();
 
     $('#track').click(function(){
-        //$('#transport').show();
-        //$('#building').hide();
+        $('#transport').show();
         $('#track').hide();
-        window.sessionStorage.setItem("track_num",track_num);
-      //  document.location.href = "./v4.final.html";
-        document.location.href = "https://luffy.ee.ncku.edu.tw:10088/racer/v4.final.html";
+        document.getElementById("background").setAttribute("src","res/background2.png");
     });
 
     $('#track1').click(function(){track_num = 1;});
@@ -20,16 +17,17 @@ $(document).ready(function(){
     $('#track3').click(function(){track_num = 3;});
     $('#track4').click(function(){track_num = 4;});
 
-    /*$('#transport').click(function(){
+    $('#transport').click(function(){
         $('#transport').hide();
         window.sessionStorage.setItem("track_num",track_num);
-        window.sessionStorage.setItem("car_num",car_num);
-        document.location.href = "./v4.final.html";
-    });*/
+        window.sessionStorage.setItem("car_num",car_num); 
+        //document.location.href = "./v4.final.html";
+        document.location.href = "https://luffy.ee.ncku.edu.tw:10086/racer/v4.final.html";
+    });
 
     $('#transport1').click(function(){car_num = 1;});
     $('#transport2').click(function(){car_num = 2;});
-    $('#transport3').click(function(){car_num = 3;});
+    //$('#transport3').click(function(){car_num = 3;});
 
     /*$('#track1').hover(function(){
         $('#pointer').css('top','125px');
