@@ -88,7 +88,7 @@ function menuClick(btn){
           },
           success:function(data){
             var arr = data;
-            for (var i=0;i< 14;i++){
+            for (var i=0;i< 18;i++){
               if(arr[i]==1)
                 $("#a"+(i+1)).html("<i class=\"large green checkmark icon\"></i>")
             

@@ -75,7 +75,7 @@ app.post("/public/sign_up_data",urlencodedParser,function(req,res){
       }
       if(notfound == 0){
         var sqli = "INSERT INTO `mytable` ( name , id , pw,play) VALUES ('"+name+"','"+id+"','"+pw+"',0)";
-        var achsql = "INSERT INTO `achievement` (id,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14) VALUES (\""+id+"\",0,0,0,0,0,0,0,0,0,0,0,0,0,0)";
+        var achsql = "INSERT INTO `achievement` (id,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16,a17,a18) VALUES (\""+id+"\",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)";
         //   console.log(sqli);
         connection.query(sqli, function(err,result){
           if(err) throw err;
@@ -120,7 +120,7 @@ app.post("/public/fb_read",urlencodedParser,function(req, res) {
         if(rows.length==0){
           sql = "INSERT INTO `mytable` ( name , id ,play) VALUES ('"+fb_name+"','"+fb_id+"',0)";
           connection.query(sql)
-            var achsql = "INSERT INTO `achievement` (id,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14) VALUES (\""+fb_id+"\",0,0,0,0,0,0,0,0,0,0,0,0,0,0)";
+            var achsql = "INSERT INTO `achievement` (id,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16,a17,a18) VALUES (\""+fb_id+"\",0,0,0,0,0,0,0,0,0,0,,0,0,0,00,0,0,0)";
           connection.query(achsql)
         }
       res.send("login succeed!")
@@ -154,17 +154,6 @@ app.post("/gameStart/readRecord",urlencodedParser,function(req,res){
     })
 
 })
-app.post("/gameStart/readAchieve",urlencodedParser,function(req,res){
-  var id = req.param('ID');
-  var str = "已解鎖成就:<br>";
-  connection.query("SELECT * FROM `uidd2018_groupI`.`achievement` WHERE id = \""+id+"\";",(err,rows,fields)=>{
-    if(rows[0].a1=1)
-      str+="初見台南<br>";
-
-
-  })
-  res.send(str);
-})
 app.post("/racer/saveRecord",urlencodedParser,function(req,res){
   var id = req.param('ID');
   var time = req.param('THISTIME');
@@ -173,78 +162,73 @@ app.post("/racer/saveRecord",urlencodedParser,function(req,res){
     connection.query("SELECT * FROM `uidd2018_groupI`.`mytable` WHERE id = \""+id+"\";",(err,rows,fields)=>{ 
       if(err) console.log("read err");
       else{
+        connection.query("UPDATE `uidd2018_groupI`.`achievement` SET a"+(++map)+"=1 WHERE id = \""+id+"\"");
         var play = rows[0]['play']+1;
-        /////////
-        var arr=[0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-          if(play>=1)
-            arr[0]=1;
-        if(play>=10)
-          arr[2]=1;
-        if(play>=15)
-          arr[3]=1;
-        if(play>=20)
-          arr[4]=1;
-        if(play>=50)
-          arr[13]=1;
-        if(time<90)
-          arr[8]=1;
-        if(time<75)
-          arr[9]=1;
-        if(time<70)
-          arr[10]=1;
-        if(time>120)
-          arr[11]=1;
-        if(time>180)
-          arr[12]=1;
-        var account = rows[0]['name'];
-        console.log(account)
-          var update_str = "UPDATE `uidd2018_groupI`.`mytable` SET `play`="+ play+" WHERE id =\""+id+"\";";
+        var update_str = "UPDATE `uidd2018_groupI`.`mytable` SET `play`="+ play+" WHERE id =\""+id+"\";";
         connection.query(update_str);
         var insert_data = "INSERT INTO `uidd2018_groupI`. `record` (id,name,map,num,time) VALUES(\""+id+"\",\""+account+"\","+map+","+play+","+time+");";
         connection.query(insert_data);
-        var updateAch="UPDATE `uidd2018_groupI`.`achievement` SET `a1`=1 ";
-        for (var i=0;i<14;i++)
-        {
-          updateAch = updateAch+" ,`a"+(i+1)+"`= "+arr[i]+" ";
-        }
-        updateAch =updateAch + "WHERE id = \""+id+"\";"
-          console.log(updateAch);
-        connection.query(updateAch);
+        var account = rows[0]['name'];
+        connection.query("SELECT * FROM `uidd2018_groupI`.`achievement` WHERE id = \""+id+"\";",(err,r,fields)=>{ 
+          if(play>=1&&!r[0].a1)
+            connection.query("UPDATE `uidd2018_groupI`.`achievement` SET a1=1 WHERE id = \""+id+"\"");
+          if(play>=10&&!r[0].a7)
+            connection.query("UPDATE `uidd2018_groupI`.`achievement` SET a7=1 WHERE id = \""+id+"\"");
+          if(play>=15&&!r[0].a8)
+            connection.query("UPDATE `uidd2018_groupI`.`achievement` SET a8=1 WHERE id = \""+id+"\"");
+          if(play>=20&&!r[0].a9)
+            connection.query("UPDATE `uidd2018_groupI`.`achievement` SET a9=1 WHERE id = \""+id+"\"");
+          if(play>=50&&!r[0].a18)
+            connection.query("UPDATE `uidd2018_groupI`.`achievement` SET a18=1 WHERE id = \""+id+"\"");
+          if(time<90&&!r[0].a13)
+            connection.query("UPDATE `uidd2018_groupI`.`achievement` SET a13=1 WHERE id = \""+id+"\"");
+          if(time<75&&!r[0].a14)
+            connection.query("UPDATE `uidd2018_groupI`.`achievement` SET a14=1 WHERE id = \""+id+"\"");
+          if(time<70&&!r[0].a15)
+            connection.query("UPDATE `uidd2018_groupI`.`achievement` SET a15=1 WHERE id = \""+id+"\"");
+          if(time>120&&!r[0].a16)
+            connection.query("UPDATE `uidd2018_groupI`.`achievement` SET a16=1 WHERE id = \""+id+"\"");
+          if(time>180&&!r[0].a17)
+            connection.query("UPDATE `uidd2018_groupI`.`achievement` SET a17=1 WHERE id = \""+id+"\"");
+        })
       }
-      res.send("OK")
     })
-})
-app.post("/racer/saveAchieve",urlencodedParser,function(req,res){
-  var id = req.param('ID');
-  var notfound=0;
-  var done=1;
-  var notdone=0;
-  connection.query("SELECT * FROM `uidd2018_groupI`.`achievement` WHERE id = \""+id+"\";",(err,rows,fields)=>{ 
-    if(err) console.log("read err");
-    else{
-      var sqls = "SELECT * FROM `achievement` WHERE id = '"+id+"'";
-      //       console.log(sqls);
-      connection.query(sqls, function(err,result,fields){
-        if(err) throw err;
-        for( var i = 0 ; i < result.length ; i++){
-          if(result[i].id==id) 
-          {notfound=1;break;}
-        }
-        if(notfound == 0){
-          var update_str = "UPDATE `uidd2018_groupI`.`achievement` SET `a1`="+ done+" WHERE id =\""+id+"\";";
-          connection.query(update_str);
-        }
-        else if(notfound == 1){
-          var insert_data = "INSERT INTO `uidd2018_groupI`. `record` (id,name,num,time) VALUES(\""+id+"\",\""+account+"\","+play+","+time+");";
-          connection.query(insert_data);
-        }
-      });
-    };  
-    var insert_data = "INSERT INTO `uidd2018_groupI`. `record` (id,name,num,time) VALUES(\""+id+"\",\""+account+"\","+play+","+time+");";
-    connection.query(insert_data);
-  })
-})
+  res.send("OK")
 
+
+})
+/*
+   app.post("/racer/saveAchieve",urlencodedParser,function(req,res){
+   var id = req.param('ID');
+   var notfound=0;
+   var done=1;
+   var notdone=0;
+   connection.query("SELECT * FROM `uidd2018_groupI`.`achievement` WHERE id = \""+id+"\";",(err,rows,fields)=>{ 
+   if(err) console.log("read err");
+   else{
+   var sqls = "SELECT * FROM `achievement` WHERE id = '"+id+"'";
+//       console.log(sqls);
+connection.query(sqls, function(err,result,fields){
+if(err) throw err;
+for( var i = 0 ; i < result.length ; i++){
+if(result[i].id==id) 
+{notfound=1;break;}
+}
+if(notfound == 0){
+var update_str = "UPDATE `uidd2018_groupI`.`achievement` SET `a1`="+ done+" WHERE id =\""+id+"\";";
+connection.query(update_str);
+}
+else if(notfound == 1){
+var insert_data = "INSERT INTO `uidd2018_groupI`. `record` (id,name,num,time) VALUES(\""+id+"\",\""+account+"\","+play+","+time+");";
+connection.query(insert_data);
+}
+});
+};  
+var insert_data = "INSERT INTO `uidd2018_groupI`. `record` (id,name,num,time) VALUES(\""+id+"\",\""+account+"\","+play+","+time+");";
+connection.query(insert_data);
+})
+})
+*/
 app.post("/readBtn",urlencodedParser,function(req,res){
   connection.query("SELECT * FROM `uidd2018_groupI`.`roomList`" ,(err,rows,fields)=>{
     var str = "";
@@ -256,7 +240,7 @@ app.post("/readBtn",urlencodedParser,function(req,res){
 })
 app.post("/gameStart/readAch",urlencodedParser,function(req,res){
   var id = req.param('id');
-  var arr=[0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+  var arr=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     var ach= "SELECT * FROM `uidd2018_groupI`.`achievement` WHERE id = \""+id+"\";"
     connection.query(ach,(err,rows,field)=>{
       if(rows.length!=0){
@@ -266,7 +250,7 @@ app.post("/gameStart/readAch",urlencodedParser,function(req,res){
         arr[2]= rows[0].a3;
         arr[3]= rows[0].a4;
         arr[4]= rows[0].a5;
-        arr[5]= rows[0].a6;
+        arr[5]= arr[1]&&arr[2]&&arr[3]&&arr[4];
         arr[6]= rows[0].a7;
         arr[7]= rows[0].a8;
         arr[8]= rows[0].a9;
@@ -275,6 +259,10 @@ app.post("/gameStart/readAch",urlencodedParser,function(req,res){
         arr[11]= rows[0].a12;
         arr[12]= rows[0].a13;
         arr[13]= rows[0].a14;
+        arr[14]= rows[0].a15;
+        arr[15]= rows[0].a16;
+        arr[16]= rows[0].a17;
+        arr[17]= rows[0].a18;
         //    }
         res.send(arr);
       }
