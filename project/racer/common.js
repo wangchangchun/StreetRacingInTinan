@@ -421,7 +421,7 @@ var SPRITES = {
   BUILDING18_LEFT:        { x: 1025, y: 4300, w: 450, h: 200},
   BUILDING18S_RIGHT:      { x: 825, y: 4525, w: 175, h: 125},
   BUILDING18S_LEFT:       { x: 1025, y: 4525, w: 200, h: 125},
-  BUILDING19_LEFT:        { x: 500, y: 4700, w: 350, h: 400},
+  BUILDING19_LEFT:        { x: 500, y: 4700, w: 350, h: 325},
   BUILDING20:             { x: 1050, y: 4700, w: 475, h: 325},
   MONUMENT_LEFT:          { x: 1175, y: 25, w: 150, h: 200},
   PLAYER_UPHILL_LEFT:     { x: 2300, y: 950, w:  280, h:   225 },
