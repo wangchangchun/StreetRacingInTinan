@@ -135,7 +135,9 @@ $("#return").click(()=>{
     var totalCars      = 200;                     // total number of cars on the road
     var currentLapTime = 0;                       // current lap time
     var lastLapTime    = null;                    // last lap time
-    
+    var collide        = 0;
+    var collide_pos    = -1;
+
     var show_pre = false;
 
     // for selecting track and car
@@ -233,6 +235,11 @@ $("#return").click(()=>{
           if (Util.overlap(playerX, playerW, sprite.offset + spriteW/2 * (sprite.offset > 0 ? 1 : -1), spriteW)) {
             speed = maxSpeed/5;
             position = Util.increase(playerSegment.p1.world.z, -playerZ, trackLength); // stop in front of sprite (at front of segment)
+            if(collide_pos != position){
+              ++collide;
+              collide_pos = position;
+              //console.log(collide);
+            }
             break;
           }
         }
