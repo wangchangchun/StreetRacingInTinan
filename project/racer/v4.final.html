@@ -61,9 +61,18 @@
     <img id = "return" src = "../gameStart/src/RETURN.png">
   </div>-->
 	<div id = "introduction" class="ui modal">
-	  <div class="header">Header</div>
+	  <div class="header">路線介紹</div>
 	  <div class="scrolling content">
-	    <p id="1"></p>
+      <p id="1">
+        安平，是臺灣歷史發展的關鍵場所。<br>
+        1624 年，荷蘭東印度公司占領安平，於此處建立熱蘭遮城，<br>
+        成為當時荷蘭治臺的重要商業軍事中心。<br>
+        1661 年，南明鄭成功率軍驅趕荷蘭人，漢人移民大量移入臺灣。<br>
+        1683 年，鄭氏降清，清帝國占領臺灣，在晚清開港通商後，<br>
+        安平成為洋商的聚集地，但隨著臺江內海的淤積，安平也走向沒落。<br>
+        日治時期，安平成為鹽業製造中心，一直延續到戰後。<br>
+        近年臺南推動觀光文創產業。
+      </p>
 		<p id="2">耶！？ 這裡就是武德殿啊，<br>
 		之前聽一些人說武德殿附近已經被台南州劃定為台南神社的外苑，<br>
 		這裡的庭園看著還挺漂亮的，<br>
@@ -109,7 +118,7 @@
   </audio>
   <span id="mute"></span>
   -->
-  <embed src="music/racer.mp3" autostart="true" loop="true" hidden="true" >
+  <embed src="music/racer.mp3" autostart="true" loop="true"  ></embed>
 
   <script src="stats.js"></script>
   <script src="common.js"></script>
@@ -265,7 +274,7 @@ $("#return").click(()=>{
         document.getElementById("introduction").style.left = '600px';
         document.getElementById("destination").style.display = 'block';
         $("#return").show();
-        $('#place').animate({height: "300px",width: "820px",left: "7%",top: "4%"},5000);
+        $('#place').animate({height: "300px",width: "820px",left: "-5%",top: "4%"},5000);
       }
 
       updateCars(dt, playerSegment, playerW);
@@ -349,7 +358,7 @@ $("#return").click(()=>{
             method: "post",
             url: "./saveRecord",
             data: {
-              ID:id ,
+              ID:window.sessionStorage.getItem("playId") ,
               map:track_num,
               THISTIME: currentLapTime
             },
@@ -364,7 +373,7 @@ $("#return").click(()=>{
             method:"post",
             url:"./saveCollide",
             data:{
-                id :id,
+                id :window.sessionStorage.getItem("playId"),
                 collide:collide
             },
             success:function(data){

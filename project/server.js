@@ -317,8 +317,23 @@ io.on('connection', function(socket){
       // console.log(data.id);
       var roomId = data.id;
       var memNum = data.num;
+      connection.query("SELECT * FROM `uidd2018_groupI`.`roomList` WHERE id = \""+roomId+"\"",(err,rows,field)=>{
+            console.log(rows.length)
+          if(rows.length!=0){
+            console.log(rows.length)
+            var delete_data = "DELETE FROM `uidd2018_groupI`.`roomList` WHERE id=\""+rows[0].id+"\";"
+            connection.query(delete_data)
       var insert_data = "INSERT INTO `uidd2018_groupI`. `roomList` (id,map,allnum,num) VALUES(\""+roomId+"\","+data.map+","+memNum+",1);";
       connection.query(insert_data);
+          }
+          else{
+          
+              var insert_data = "INSERT INTO `uidd2018_groupI`. `roomList` (id,map,allnum,num) VALUES(\""+roomId+"\","+data.map+","+memNum+",1);";
+              connection.query(insert_data);
+          }
+            //connection.query("DELETE ")
+      
+      })
       socket.join(roomId);
       io.sockets.in(roomId).emit('connectToRoom',{id:data.id,roomId: roomId} );
       //socket.broadcast.in(roomId).emit('message', 'joined this room.');
