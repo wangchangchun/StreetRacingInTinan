@@ -18,6 +18,10 @@ $(document).ready(function() {
     }
   })*/
   var socket = io();
+  $("#out").click(()=>{
+  document.location.href= "../gameStart/index.html";
+  
+  })
   $("#createOk").click(()=>{
       socket.emit('create',{id:ID,num:$('#numSelect').val(),map:$('#mapSelect').val()});
       console.log($('#mapSelect').val())

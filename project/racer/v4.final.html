@@ -99,9 +99,9 @@
 	  其中噴水池更是當時台南公園的一大賣點，除此之外日治時代台灣的第一場棒球賽就在燕潭旁的運動場進行著，<br>
 	  哎呀你看我們到燕潭了，附近還有騎兵隊的馬匹正在進行診察呢～我們快過去看看吧！！<br>
 	  我想去那裏划船欣賞風景度過一個下午應該會是不錯的體驗XD</p>
-	  <img id = "return" src = "../gameStart/src/RETURN.png">
 	  </div>
 	</div>
+	  <img id = "return" src = "../gameStart/src/RETURN.png">
 <!--
   <audio id='music'>
     <source src="music/racer.ogg">
@@ -257,12 +257,14 @@ $("#return").click(()=>{
       if(!gameover){
         document.getElementById("introduction").style.display = 'none';
         document.getElementById("destination").style.display = 'none';
+        document.getElementById("return").style.display = 'none';
       }
       else{
         document.getElementById("introduction").style.display = 'block';  
         document.getElementById("introduction").style.top = '100px';
         document.getElementById("introduction").style.left = '600px';
         document.getElementById("destination").style.display = 'block';
+        $("#return").show();
         $('#place').animate({height: "300px",width: "820px",left: "7%",top: "4%"},5000);
       }
 
@@ -353,6 +355,7 @@ $("#return").click(()=>{
             },
             success: function(data) {
               // $("#ajax_content").text(data)
+            //  alert("saveRecord ok")
             }
         })
         recordSend=true;
@@ -364,8 +367,8 @@ $("#return").click(()=>{
                 id :id,
                 collide:collide
             },
-            success:function(){
-            
+            success:function(data){
+              //  alert("saveCollide ok ")
             }
         
         })

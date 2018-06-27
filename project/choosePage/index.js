@@ -22,7 +22,7 @@ $(document).ready(function(){
         window.sessionStorage.setItem("track_num",track_num);
         window.sessionStorage.setItem("car_num",car_num); 
         //document.location.href = "./v4.final.html";
-        document.location.href = "https://luffy.ee.ncku.edu.tw:10086/racer/v4.final.html";
+        document.location.href = "https://luffy.ee.ncku.edu.tw:10088/racer/v4.final.html";
     });
 
     $('#transport1').click(function(){car_num = 1;});

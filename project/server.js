@@ -158,15 +158,14 @@ app.post("/racer/saveCollide",urlencodedParser,function(req,res){
     var id = req.param('id');
     var coll = req.param('collide')
       console.log("coll: "+coll)
-    connection.query("SELECT * FROM `uidd2018_groupI`.`achievement` WHERE id = \""+id+"\";",(err,r,fields)=>{ 
-      if(coll>=10&&!r[0].a10)
+      if(coll>=10)
             connection.query("UPDATE `uidd2018_groupI`.`achievement` SET a10=1 WHERE id = \""+id+"\"");
-      if(coll>=15&&!r[0].a11)
+      if(coll>=15)
             connection.query("UPDATE `uidd2018_groupI`.`achievement` SET a11=1 WHERE id = \""+id+"\"");
-      if(coll>=30&&!r[0].a12)
+      if(coll>=30)
             connection.query("UPDATE `uidd2018_groupI`.`achievement` SET a12=1 WHERE id = \""+id+"\"");
+      res.send("OK")
 
-    })
 })
 app.post("/racer/saveRecord",urlencodedParser,function(req,res){
   var id = req.param('ID');

@@ -12,7 +12,7 @@ const cacheFile = [
   './student id.png'
 ]
 
-const cacheKey = 'TSR_v2'
+const cacheKey = 'TSR_v3'
 
 // install
 self.addEventListener('install', event => {
